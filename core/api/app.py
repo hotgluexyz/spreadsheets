@@ -1,6 +1,7 @@
 import logging
 import re
 import json
+import functools
 
 from flask import Flask, request, jsonify
 from requests_toolbelt import MultipartDecoder
@@ -12,7 +13,36 @@ logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
 app = Flask(__name__)
 
+#############
+# CORS      #
+#############
+def cors(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        if request.method == "OPTIONS": # CORS preflight
+            return cors_preflight()
 
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def cors_preflight():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
+
+def corsify(data):
+    response = jsonify(data)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+#############
+# FILES     #
+#############
 def _get_parts():
     content = request.get_data()
     content_type = request.headers['content-type']
@@ -58,7 +88,8 @@ def do_mapping():
     return {'code': 'success'}
 
 
-@app.route('/file/upload', methods=['POST'])
+@app.route('/file/upload', methods=['POST', 'OPTIONS'])
+@cors
 def upload_file():
     logger.debug(f"[upload_file]: parsing payload")
     files = _get_parts()
@@ -79,4 +110,4 @@ def upload_file():
     # Return the column names, and first 5 rows
     data = manager.parse_data(filename)
 
-    return {'code': 'success', 'data': data}
+    return corsify({'code': 'success', 'data': data})
