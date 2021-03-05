@@ -72,20 +72,21 @@ def _get_parts():
     return files
 
 
-@app.route('/file/map', methods=['POST'])
+@app.route('/file/map', methods=['POST', 'OPTIONS'])
+@cors
 def do_mapping():
     body = request.json
     filename = body.get("filename")
     mapping = body.get("mapping")
 
     if mapping is None:
-        return {'code': 'error', 'message': 'No mapping Provided'}, 400
+        return corsify({'code': 'error', 'message': 'No mapping Provided'}), 400
 
     logger.debug(f"[do_mapping]: Received mapping={json.dumps(mapping)}")
     # Save the schema for later
     manager.do_mapping(filename, mapping)
 
-    return {'code': 'success'}
+    return corsify({'code': 'success'})
 
 
 @app.route('/file/upload', methods=['POST', 'OPTIONS'])
