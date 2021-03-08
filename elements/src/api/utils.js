@@ -20,6 +20,9 @@ class APIError extends ExtendableError {
 }
 
 const doRequest = async (url, body = {}, options = {}) => {
+	if (!body.headers) {
+		body.headers = {'Content-Type': "application/json"};
+	}
 	// delete any undefined headers
 	Object.keys(body.headers).forEach(key => body.headers[key] === undefined ? delete body.headers[key] : {});
     url = `http://localhost:5000/${url}`

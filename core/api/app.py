@@ -3,7 +3,7 @@ import re
 import json
 import functools
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, make_response, jsonify
 from requests_toolbelt import MultipartDecoder
 
 from lib import manager
@@ -111,4 +111,4 @@ def upload_file():
     # Return the column names, and first 5 rows
     data = manager.parse_data(filename)
 
-    return corsify({'code': 'success', 'data': data})
+    return corsify({'code': 'success', 'data': data, 'filename': filename})

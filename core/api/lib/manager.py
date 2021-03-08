@@ -23,11 +23,14 @@ def do_mapping(filename, mapping):
     data_dir = establish_dirs()
     from_path = f"{data_dir}/{filename}"
     to_path = from_path.replace(".csv", "-mod.csv")
-    new_header = ",".join(mapping) + '\n'
 
     with open(from_path) as from_file, open(to_path, 'w') as to_file:
-        # Get rid of old header
-        from_file.readline()
+        # Get old cols
+        cols = from_file.readline().rstrip().split(",")
+        # Update col names
+        new_cols = list(map(lambda x: mapping[x] if x in mapping else x, cols))
+        # Create new header
+        new_header = ",".join(new_cols) + '\n'
         # Write new header
         to_file.write(new_header)
         # Save the rest of the file

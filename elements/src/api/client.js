@@ -8,3 +8,7 @@ export function uploadFiles(file) {
     // Send the request
     return Request.POST(`file/upload`, {body: formData, headers: {'Content-Type': undefined}});
 }
+
+export function doMapping(filename, mapping) {
+    return Request.POST(`file/map`, {body: JSON.stringify({filename, mapping})});
+}
