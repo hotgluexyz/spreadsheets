@@ -83,10 +83,10 @@ def do_mapping():
         return corsify({'code': 'error', 'message': 'No mapping Provided'}), 400
 
     logger.debug(f"[do_mapping]: Received mapping={json.dumps(mapping)}")
-    # Save the schema for later
-    manager.do_mapping(filename, mapping)
+    # Generate the new file
+    data = manager.do_mapping(filename, mapping)
 
-    return corsify({'code': 'success'})
+    return corsify({'code': 'success', 'data': data})
 
 
 @app.route('/file/upload', methods=['POST', 'OPTIONS'])

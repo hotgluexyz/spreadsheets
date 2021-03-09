@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { FileAcceptor, ColumnMapper } from 'elements'
+import { ColumnMapper, FileAcceptor, FilePreview } from 'elements'
 import 'elements/dist/index.css'
 
 const App = () => {
-  const [isMapping, setMapping] = React.useState(false);
+  const [state, setState] = React.useState("upload");
   const [data, setData] = React.useState();
   const [filename, setFileName] = React.useState();
 
@@ -12,18 +12,22 @@ const App = () => {
     // Let's open the mapping UI
     setData(data);
     setFileName(filename);
-    setMapping(true);
+    setState("mapping");
   };
 
-  const onDoneExample = () => {
+  const onDoneExample = (data) => {
     alert("Mapping complete!");
-    setMapping(false);
+    setData(data);
+    setState("preview");
   };
 
-  if (isMapping)
+  if (state === "mapping")
     return <ColumnMapper data={data} filename={filename} onDone={onDoneExample} schema={{
       "Name": {}
     }}/>
+
+  if (state === "preview")
+    return <FilePreview data={data}/>
 
   return <FileAcceptor onUpload={onUploadExample}/>
 }

@@ -60,8 +60,8 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
         setLoading(true);
 
         try {
-            await doMapping(filename, mapping);
-            onDone && onDone();
+            const {data} = await doMapping(filename, mapping);
+            onDone && onDone(data);
         } catch (err) {
             console.error(err);
             alert(`Something went wrong: ${err}: ${err.stack}`);

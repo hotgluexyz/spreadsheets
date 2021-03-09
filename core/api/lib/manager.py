@@ -24,6 +24,7 @@ def do_mapping(filename, mapping):
     from_path = f"{data_dir}/{filename}"
     to_path = from_path.replace(".csv", "-mod.csv")
 
+    # Update column names
     with open(from_path) as from_file, open(to_path, 'w') as to_file:
         # Get old cols
         cols = from_file.readline().rstrip().split(",")
@@ -35,6 +36,20 @@ def do_mapping(filename, mapping):
         to_file.write(new_header)
         # Save the rest of the file
         shutil.copyfileobj(from_file, to_file)
+
+    # Drop any unnecessary columns
+    if len(mapping) < len(cols):
+        # Read the updated column names
+        df = pd.read_csv(to_path)
+        # Get the required col names
+        required_cols = list(mapping.values())
+        # Only keep these
+        df = df[required_cols]
+        # Write the new CSV
+        df.to_csv(to_path, index=False)
+
+    # Return a preview
+    return preview_df(to_path)
 
 
 def save_data(filename, content):
@@ -62,3 +77,24 @@ def parse_data(filename):
         data[col] = json.loads(df[col].to_json())
 
     return data
+
+
+def preview_df(path):
+    """
+    Generates a JSON preview of the final data
+    """
+    df = pd.read_csv(path, nrows=5)
+    cols = list(df.columns)
+    rows = []
+
+    rows.append(list(map(lambda x: {'value': x}, cols)))
+
+    for index, row in df.iterrows():
+        row_data = []
+
+        for col in cols:
+            row_data.append({'value': row[col]})
+
+        rows.append(row_data)
+
+    return rows
