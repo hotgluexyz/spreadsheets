@@ -25,6 +25,7 @@ def do_mapping(filename, mapping):
     to_path = from_path.replace(".csv", "-mod.csv")
 
     # Update column names
+    # TODO: Won't work for CSV files with different separator or XLS files
     with open(from_path) as from_file, open(to_path, 'w') as to_file:
         # Get old cols
         cols = from_file.readline().rstrip().split(",")
@@ -38,6 +39,7 @@ def do_mapping(filename, mapping):
         shutil.copyfileobj(from_file, to_file)
 
     # Drop any unnecessary columns
+    # TODO: Is the best way of handling this?
     if len(mapping) < len(cols):
         # Read the updated column names
         df = pd.read_csv(to_path)
@@ -68,7 +70,7 @@ def parse_data(filename):
     """
     data_dir = establish_dirs()
 
-    # Read the file
+    # Read the first 5 rows of input data
     df = pd.read_csv(f"{data_dir}/{filename}", nrows=5)
     cols = list(df.columns)
     data = {}
@@ -83,6 +85,7 @@ def preview_df(path):
     """
     Generates a JSON preview of the final data
     """
+    # Read only the first 5 rows
     df = pd.read_csv(path, nrows=5)
     cols = list(df.columns)
     rows = []

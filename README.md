@@ -1,4 +1,4 @@
-# gluestick by hotglue
+# ![gluestick logo](./assets/gs-icon.svg) gluestick by hotglue
 An open source and self-hosted file CSV import button for your web app. Designed to be a free alternative to flatfile.
 
 ## Motivation

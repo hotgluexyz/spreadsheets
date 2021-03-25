@@ -85,6 +85,7 @@ def do_mapping():
     logger.debug(f"[do_mapping]: Received mapping={json.dumps(mapping)}")
     # Generate the new file
     data = manager.do_mapping(filename, mapping)
+    # TODO: Upload to remote file store, delete local copy
 
     return corsify({'code': 'success', 'data': data})
 
