@@ -23,7 +23,17 @@ const App = () => {
 
   if (state === "mapping")
     return <ColumnMapper data={data} filename={filename} onDone={onDoneExample} schema={{
-      "Name": {}
+      fields: [
+        {
+          col: "Name",
+          key: "name"
+        },
+        {
+          col: "Phone Number",
+          key: "phoneNumber",
+          validator: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.source
+        }
+      ]
     }}/>
 
   if (state === "preview")

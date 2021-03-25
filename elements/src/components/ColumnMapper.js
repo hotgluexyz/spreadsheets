@@ -1,9 +1,9 @@
 import React from 'react'
-import { doMapping } from '../api/client'
+import Spreadsheet from "react-spreadsheet";
+import { doMapping, validateMapping } from '../api/client'
 import classes from './mapper.styles.module.css'
 
-const ColumnSelector = (props) => {
-    const {requiredCol, availableCols, onSelect, defaultValue} = props;
+const ColumnSelector = ({invalid, requiredCol, availableCols, onSelect, defaultValue}) => {
     const [col, selectCol] = React.useState(defaultValue ? defaultValue : '');
     let options = []
 
@@ -35,23 +35,37 @@ const ColumnSelector = (props) => {
                     </select>
                 </div>
             </td>
+            {invalid && <td>
+                {invalid.percent} rows have a valid value
+                {invalid && <Spreadsheet data={invalid.rows} />}
+            </td>}
         </tr>
     );
+}
+
+const invert = (obj) => {
+    let result = {}
+    Object.keys(obj).forEach(k => {
+        result[obj[k]] = k
+    });
+    return result;
 }
 
 const ColumnMapper = ({schema, data, filename, onDone}) => {
     const [loading, setLoading] = React.useState(false);
     const [mapping, setMapping] = React.useState({});
+    const [invalid, setInvalid] = React.useState({});
 
-    const requiredCols = schema && Object.keys(schema);
+    const requiredCols = schema && schema.fields && schema.fields.map(f => f.col);
     const availableCols = data && Object.keys(data);
 
     const updateMapping = (requiredCol, selectedCol) => {
-        mapping[selectedCol] = requiredCol;
+        mapping[requiredCol] = selectedCol;
         setMapping(mapping);
+        handleValidate();
     }
 
-    const handleSaveMapping = async () => {
+    const handleMapping = async () => {
         if (Object.keys(mapping).length < requiredCols.length) {
             alert("Oops! You didn't select a matching column for all the required columns.")
             return;
@@ -60,8 +74,25 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
         setLoading(true);
 
         try {
-            const {data} = await doMapping(filename, mapping);
+            const {data} = await doMapping(filename, invert(mapping), schema);
             onDone && onDone(data);
+        } catch (err) {
+            console.error(err);
+            alert(`Something went wrong: ${err}: ${err.stack}`);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleValidate = async () => {
+        if (Object.keys(mapping).length < requiredCols.length) {
+            return;
+        }
+        setLoading(true);
+
+        try {
+            const {data} = await validateMapping(filename, invert(mapping), schema);
+            setInvalid(data);
         } catch (err) {
             console.error(err);
             alert(`Something went wrong: ${err}: ${err.stack}`);
@@ -75,7 +106,7 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
 
     if (requiredCols && availableCols && mapping) {
         requiredCols.forEach(col => {
-            selectors.push(<ColumnSelector key={col} requiredCol={col} defaultValue={mapping[col]} availableCols={availableCols} onSelect={updateMapping}/>)
+            selectors.push(<ColumnSelector key={col} invalid={invalid[col]} requiredCol={col} defaultValue={mapping[col]} availableCols={availableCols} onSelect={updateMapping}/>)
         });
     }
 
@@ -95,7 +126,8 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
                     <thead>
                         <tr>
                             <td style={{padding: 10}} >Required Column</td>
-                            <td align="right">Your Column</td>
+                            <td>Your Column</td>
+                            <td align="right">Validate</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,7 +139,7 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
             <div>
                 <button variant="outlined" color="primary" component="span"
                         disabled={loading}
-                        onClick={handleSaveMapping}>
+                        onClick={handleMapping}>
                     Confirm mapping
                 </button>
             </div>

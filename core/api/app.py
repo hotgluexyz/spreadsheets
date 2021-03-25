@@ -72,27 +72,48 @@ def _get_parts():
     return files
 
 
-@app.route('/file/map', methods=['POST', 'OPTIONS'])
+@app.route('/file/<user>/map', methods=['POST', 'OPTIONS'])
 @cors
-def do_mapping():
+def do_mapping(user):
     body = request.json
     filename = body.get("filename")
     mapping = body.get("mapping")
+    schema = body.get("schema")
 
     if mapping is None:
         return corsify({'code': 'error', 'message': 'No mapping Provided'}), 400
 
     logger.debug(f"[do_mapping]: Received mapping={json.dumps(mapping)}")
+
     # Generate the new file
-    data = manager.do_mapping(filename, mapping)
+    data = manager.do_mapping(user, filename, mapping, schema)
     # TODO: Upload to remote file store, delete local copy
 
     return corsify({'code': 'success', 'data': data})
 
 
-@app.route('/file/upload', methods=['POST', 'OPTIONS'])
+@app.route('/file/<user>/validate', methods=['POST', 'OPTIONS'])
 @cors
-def upload_file():
+def validate_mapping(user):
+    body = request.json
+    filename = body.get("filename")
+    mapping = body.get("mapping")
+    schema = body.get("schema")
+
+    if mapping is None:
+        return corsify({'code': 'error', 'message': 'No mapping Provided'}), 400
+
+    logger.debug(f"[validate_mapping]: Received mapping={json.dumps(mapping)}")
+
+    # Validate the mapping
+    data = manager.validate_mapping(user, filename, mapping, schema)
+
+    return corsify({'code': 'success', 'data': data})
+
+
+@app.route('/file/<user>/upload', methods=['POST', 'OPTIONS'])
+@cors
+def upload_file(user):
     logger.debug(f"[upload_file]: parsing payload")
     files = _get_parts()
 
@@ -107,9 +128,9 @@ def upload_file():
 
     # Save the file
     logger.info(f"[upload_file]: Uploading {filename}")
-    manager.save_data(filename, file.get("content"))
+    manager.save_data(user, filename, file.get("content"))
 
     # Return the column names, and first 5 rows
-    data = manager.parse_data(filename)
+    data = manager.parse_data(user, filename)
 
     return corsify({'code': 'success', 'data': data, 'filename': filename})
