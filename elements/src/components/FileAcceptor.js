@@ -2,12 +2,12 @@ import React from 'react'
 import { uploadFiles } from '../api/client'
 import classes from './acceptor.styles.module.css'
 
-const FileAcceptor = ({onUpload}) => {
+const FileAcceptor = ({user, onUpload}) => {
   const onUploadInternal = (e) => {
     const files = e.target.files
 
     if (files && files.length > 0) {
-      uploadFiles(files[0]).then(res => {
+      uploadFiles(user, files[0]).then(res => {
         const {data, filename} = res;
         // Send the parsed columns to the listener
         onUpload && onUpload(data, filename);

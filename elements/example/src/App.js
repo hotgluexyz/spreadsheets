@@ -7,6 +7,7 @@ const App = () => {
   const [state, setState] = React.useState("upload");
   const [data, setData] = React.useState();
   const [filename, setFileName] = React.useState();
+  const [userId, setUserId] = React.useState("default");
 
   const onUploadExample = (data, filename) => {
     // Let's open the mapping UI
@@ -22,7 +23,7 @@ const App = () => {
   };
 
   if (state === "mapping")
-    return <ColumnMapper data={data} filename={filename} onDone={onDoneExample} schema={{
+    return <ColumnMapper user={userId} data={data} filename={filename} onDone={onDoneExample} schema={{
       fields: [
         {
           col: "Name",
@@ -39,7 +40,7 @@ const App = () => {
   if (state === "preview")
     return <FilePreview data={data}/>
 
-  return <FileAcceptor onUpload={onUploadExample}/>
+  return <FileAcceptor user={userId} onUpload={onUploadExample}/>
 }
 
 export default App

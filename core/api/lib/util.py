@@ -11,3 +11,11 @@ def write_file(filename, data):
         fh.write(data)
     finally:
         fh.close()
+
+
+def get_key(d, val):
+    for key, value in d.items():
+         if val == value:
+             return key
+ 
+    return None

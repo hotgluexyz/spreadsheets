@@ -51,7 +51,7 @@ const invert = (obj) => {
     return result;
 }
 
-const ColumnMapper = ({schema, data, filename, onDone}) => {
+const ColumnMapper = ({user, schema, data, filename, onDone}) => {
     const [loading, setLoading] = React.useState(false);
     const [mapping, setMapping] = React.useState({});
     const [invalid, setInvalid] = React.useState({});
@@ -74,7 +74,7 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
         setLoading(true);
 
         try {
-            const {data} = await doMapping(filename, invert(mapping), schema);
+            const {data} = await doMapping(user, filename, invert(mapping), schema);
             onDone && onDone(data);
         } catch (err) {
             console.error(err);
@@ -91,7 +91,7 @@ const ColumnMapper = ({schema, data, filename, onDone}) => {
         setLoading(true);
 
         try {
-            const {data} = await validateMapping(filename, invert(mapping), schema);
+            const {data} = await validateMapping(user, filename, invert(mapping), schema);
             setInvalid(data);
         } catch (err) {
             console.error(err);

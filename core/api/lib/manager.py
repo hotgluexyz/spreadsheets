@@ -16,14 +16,6 @@ def establish_dirs():
     return data_dir
 
 
-def get_key(d, val):
-    for key, value in d.items():
-         if val == value:
-             return key
- 
-    return None
-
-
 def validate_mapping(user, filename, mapping, schema):
     """
     Checks if mapping is valid using the validator
@@ -33,7 +25,6 @@ def validate_mapping(user, filename, mapping, schema):
     df = pd.read_csv(from_path)
 
     # Compute invalid mappings
-    # TODO: Handle missing entries
     invalid = {}
 
     for field in schema['fields']:
@@ -41,8 +32,8 @@ def validate_mapping(user, filename, mapping, schema):
         if regexp is not None:
             col = field['col']
             # Compute against this
-            df_col = df[get_key(mapping, col)].astype("string")
-            valid = df_col.str.match(regexp)
+            df_col = df[util.get_key(mapping, col)].astype("string")
+            valid = df_col.notna() & df_col.str.match(regexp)
             counts = valid.value_counts()
             percent_valid = counts.get(True, 0) / (counts.get(False, 0) + counts.get(True, 0))
             invalid_data = df_col.loc[~valid]
@@ -50,6 +41,8 @@ def validate_mapping(user, filename, mapping, schema):
 
             # Serialize invalid rows
             for index, value in invalid_data.items():
+                if pd.isna(value):
+                    value = ''
                 invalid_rows.append([{'value': value}])
 
             # Tell them which were invalid
@@ -101,11 +94,10 @@ def do_mapping(user, filename, mapping, schema):
         regexp = field.get("validator")
         if regexp is not None:
             col = field['col']
-            valid = df[col].str.match(regexp)
+            valid = df[col].notna() & df[col].str.match(regexp)
 
             # Only keep valid rows
-            df[col] = df[col].loc[valid]
-
+            df = df.loc[valid]
 
     # Write the new CSV
     df.to_csv(to_path, index=False)
