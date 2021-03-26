@@ -1,13 +1,13 @@
 .headerContainer {
-    display: flex;
-    justify-content: flex-end;
-    padding: 2px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 2px;
 }
 
 .textContainer {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .formControl {
@@ -16,20 +16,20 @@
 }
 
 .scrollGrid {
-    overflow-y: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  overflow-y: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .container {
-    padding: 5px;
+  padding: 5px;
 }
 
 .loading {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 120;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 120;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ColumnMapper, FileAcceptor, FilePreview } from 'elements'
+import { GlueStick } from 'elements'
 import 'elements/dist/index.css'
 
 const App = () => {
@@ -21,15 +21,17 @@ const App = () => {
     setState("preview");
   };
 
-  if (state === "mapping")
-    return <ColumnMapper data={data} filename={filename} onDone={onDoneExample} schema={{
-      "Name": {}
-    }}/>
 
-  if (state === "preview")
-    return <FilePreview data={data}/>
 
-  return <FileAcceptor onUpload={onUploadExample}/>
+  return (
+    <GlueStick
+      stage={state}
+      data={data}
+      filename={filename}
+      onUpload={onUploadExample}
+      onDone={onDoneExample}
+      schema={{ 'Name': {}}}
+    />)
 }
 
 export default App

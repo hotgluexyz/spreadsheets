@@ -2,6 +2,12 @@ import React from 'react'
 import { uploadFiles } from '../api/client'
 import classes from './acceptor.styles.module.css'
 
+import iconAsset from '../assets/upload_file.svg'
+
+// Importing images is a bit clunky with create-react-library, got my solution from here.
+// https://github.com/transitive-bullshit/create-react-library/issues/220#issuecomment-771578208
+const icon = require(`./${iconAsset}`)
+
 const FileAcceptor = ({onUpload}) => {
   const onUploadInternal = (e) => {
     const files = e.target.files
@@ -16,22 +22,22 @@ const FileAcceptor = ({onUpload}) => {
   }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.paper} style={{ width: 400, height: 300 }}>
-        <div style={{ display: 'inline-grid' }}>
-          <h3 className={classes.text}>Drag a File</h3>
-          <h6 className={classes.subtext}>or</h6>
-          <h3 className={classes.text}>Click to Upload</h3>
-        </div>
+    <React.Fragment>
+      <h3 className={classes.heading}>Upload your data</h3>
+      <p className={classes.description}>To begin the data import, please upload a CSV or XML file.</p>
+      <div className={classes.uploadArea}>
+        <img className={classes.icon} src={icon} />
+        <h3 className={classes.text}>Drag & Drop a File</h3>
+        <span className={classes.subtext}>OR SELECT A FILE</span>
+        <input
+          id='data-file'
+          accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+          type='file'
+          className={classes.fileInput}
+          onChange={onUploadInternal}
+        />
       </div>
-      <input
-        id='data-file'
-        accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-        type='file'
-        className={classes.fileInput}
-        onChange={onUploadInternal}
-      />
-    </div>
+    </React.Fragment>
   )
 }
 
