@@ -172,11 +172,13 @@ export default function Home() {
                           CSV files, and catch malformed data before ingestion.
                         </p>
                       </div>
-                      <img
-                        src={require("../assets/img/preview/MapData.png")}
-                        alt="gluestick mapping"
-                        className="img-fluid"
-                      />
+                      <div class="col-md-12">
+                        <img
+                          src={require("../assets/img/preview/MapData.png")}
+                          alt="gluestick mapping"
+                          className="img-fluid"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -196,11 +198,13 @@ export default function Home() {
                           process new data with webhooks.
                         </p>
                       </div>
-                      <img
-                        src={require("../assets/img/preview/Upload.png")}
-                        alt="gluestick upload"
-                        className="img-fluid"
-                      />
+                      <div class="col-md-12">
+                        <img
+                          src={require("../assets/img/preview/Upload.png")}
+                          alt="gluestick upload"
+                          className="img-fluid"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -220,11 +224,13 @@ export default function Home() {
                           <a href="#">docs.</a>
                         </p>
                       </div>
-                      <img
-                        src={require("../assets/img/icons/terraform.png")}
-                        alt="terraform"
-                        className="img-fluid"
-                      />
+                      <div class="col-md-12">
+                        <img
+                          src={require("../assets/img/icons/terraform.png")}
+                          alt="terraform"
+                          className="img-fluid"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
