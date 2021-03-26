@@ -13,7 +13,7 @@ aws s3 cp out s3://gluestick.xyz/ --acl public-read --exclude "*.html" --recursi
   echo "${HTMLFILE} -> ${HTMLFILE_WITHOUT_INDEX}"
 
   aws s3 cp ${HTMLFILE} \
-    s3://qa.hotglue.xyz/$HTMLFILE_WITHOUT_INDEX
+    s3://gluestick.xyz/$HTMLFILE_WITHOUT_INDEX
 done)
 
 printf "[SUCCESS] gluestick website published"
