@@ -44,12 +44,14 @@ export default function Home() {
               </div>
             </div>
             <div className="col">
-              <div className="row justify-content-center">
-                <img
-                  className="img-fluid"
-                  src={require("../assets/img/preview/FileAcceptor.png")}
-                  alt="gluestick upload"
-                />
+              <div className="row justify-content-center" data-jarallax-element="-50">
+                <div class="col-md-12" data-aos="zoom-in" data-aos-delay="250">
+                  <img
+                    className="img-fluid"
+                    src={require("../assets/img/preview/FileAcceptor.png")}
+                    alt="gluestick upload"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -304,16 +306,12 @@ export default function Home() {
                 className="row justify-content-center"
                 data-jarallax-element="-50"
               >
-                <img
-                  className="img-fluid position-relative"
-                  src={require("../assets/img/preview/FileAcceptor.png")}
-                  alt="gluestick"
-                />
-                <div
-                  className="h-75 w-75 position-absolute bottom right d-none d-lg-block"
-                  data-jarallax-element="-50"
-                >
-                  <div className="blob blob-4 w-100 h-100 bg-primary opacity-90"></div>
+                <div class="col-md-12" data-aos="zoom-in" data-aos-delay="250">
+                  <img
+                    className="img-fluid position-relative"
+                    src={require("../assets/img/preview/FileAcceptor.png")}
+                    alt="gluestick"
+                  />
                 </div>
               </div>
             </div>
