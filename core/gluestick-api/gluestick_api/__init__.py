@@ -71,6 +71,11 @@ def _get_parts():
 
     return files
 
+@app.route('/status', methods=['GET', 'OPTIONS'])
+@cors
+def status():
+    return corsify({'code': 'success'})
+
 
 @app.route('/file/<user>/map', methods=['POST', 'OPTIONS'])
 @cors
