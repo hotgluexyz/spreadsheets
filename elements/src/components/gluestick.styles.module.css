@@ -26,13 +26,24 @@
     0 100px 150px rgba(0, 0, 0, 0.07);
 }
 
+.footer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-areas: 'back breadcrumbs forward';
+
+  margin-top: 4rem;
+
+  justify-items: center;
+  align-items: center;
+}
+
 .breadcrumbs {
+  grid-area: breadcrumbs;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  margin-top: 2rem;
 }
 
 .breadcrumbs span {
@@ -48,6 +59,54 @@
   background-color: rgba(85, 90, 100, 0.1);
 
   margin: 0rem 1rem;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+
+  padding: 0.5rem 1.25rem;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 0.35rem;
+  transition: opacity 150ms ease-out;
+}
+
+.footer a:hover {
+  opacity: 0.75;
+}
+
+.footer a img {
+  height: 1.25rem;
+  width: auto;
+}
+
+.btnBack {
+  grid-area: back;
+
+  justify-self: flex-start;
+
+  background-color: #555a64;
+}
+
+.btnBack img {
+  margin-right: 1rem;
+}
+
+.btnForward {
+  grid-area: forward;
+
+  justify-self: flex-end;
+
+  background-color: #28ed8f;
+}
+
+.btnForward img {
+  margin-left: 1rem;
 }
 
 .activeStage {
