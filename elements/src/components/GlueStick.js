@@ -48,7 +48,7 @@ const GlueStick = ({ stage, data, filename, onUpload, onDone, schema}) => {
             <span className={classes.breadcrumbSpacer}></span>
             <span className={ stage == 'preview' ? classes.activeStage : classes.inactiveStage }>Preview</span>
           </div>
-          { stage == 'mapping' ? <a className={classes.btnForward} href='#'><img src={forwardIcon}/>Continue</a> : null }
+          { stage == 'mapping' ? <a className={classes.btnForward} href='#'>Continue<img src={forwardIcon}/></a> : null }
           { stage == 'preview' ? <a className={classes.btnForward} href='#'>Import<img src={doneIcon}/></a> : null }
         </div>
       </div>
