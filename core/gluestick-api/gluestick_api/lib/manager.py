@@ -16,12 +16,50 @@ def establish_dirs():
     return data_dir
 
 
-def do_mapping(filename, mapping):
+def validate_mapping(user, filename, mapping, schema):
+    """
+    Checks if mapping is valid using the validator
+    """
+    data_dir = establish_dirs()
+    from_path = f"{data_dir}/{user}/{filename}"
+    df = pd.read_csv(from_path)
+
+    # Compute invalid mappings
+    invalid = {}
+
+    for field in schema['fields']:
+        regexp = field.get("validator")
+        if regexp is not None:
+            col = field['col']
+            # Compute against this
+            df_col = df[util.get_key(mapping, col)].astype("string")
+            valid = df_col.notna() & df_col.str.match(regexp)
+            counts = valid.value_counts()
+            percent_valid = counts.get(True, 0) / (counts.get(False, 0) + counts.get(True, 0))
+            invalid_data = df_col.loc[~valid]
+            invalid_rows = []
+
+            # Serialize invalid rows
+            for index, value in invalid_data.items():
+                if pd.isna(value):
+                    value = ''
+                invalid_rows.append([{'value': value}])
+
+            # Tell them which were invalid
+            invalid[col] = {
+                'percent': "{:.2%}".format(percent_valid),
+                'rows': invalid_rows
+            }
+
+    return invalid
+
+
+def do_mapping(user, filename, mapping, schema):
     """
     Update column names of filename according to mapping dict
     """
     data_dir = establish_dirs()
-    from_path = f"{data_dir}/{filename}"
+    from_path = f"{data_dir}/{user}/{filename}"
     to_path = from_path.replace(".csv", "-mod.csv")
 
     # Update column names
@@ -38,40 +76,54 @@ def do_mapping(filename, mapping):
         # Save the rest of the file
         shutil.copyfileobj(from_file, to_file)
 
+    # Read the updated file
+    df = pd.read_csv(to_path)
+
     # Drop any unnecessary columns
     # TODO: Is the best way of handling this?
     if len(mapping) < len(cols):
-        # Read the updated column names
-        df = pd.read_csv(to_path)
         # Get the required col names
         required_cols = list(mapping.values())
         # Only keep these
         df = df[required_cols]
-        # Write the new CSV
-        df.to_csv(to_path, index=False)
+
+    # Validation
+    for field in schema['fields']:
+        regexp = field.get("validator")
+        if regexp is not None:
+            col = field['col']
+            valid = df[col].notna() & df[col].str.match(regexp)
+
+            # Only keep valid rows
+            df = df.loc[valid]
+
+    # Write the new CSV
+    df.to_csv(to_path, index=False)
 
     # Return a preview
     return preview_df(to_path)
 
 
-def save_data(filename, content):
+def save_data(user, filename, content):
     """
     Save data to data_dir
     """
     data_dir = establish_dirs()
+    user_dir = f"{data_dir}/{user}"
+    os.makedirs(user_dir, exist_ok=True)
 
     # Save the file
-    util.write_file(f"{data_dir}/{filename}", content)
+    util.write_file(f"{user_dir}/{filename}", content)
 
 
-def parse_data(filename):
+def parse_data(user, filename):
     """
     Returns the columns and first 5 rows as JSON
     """
     data_dir = establish_dirs()
 
     # Read the first 5 rows of input data
-    df = pd.read_csv(f"{data_dir}/{filename}", nrows=5)
+    df = pd.read_csv(f"{data_dir}/{user}/{filename}", nrows=5)
     cols = list(df.columns)
     data = {}
 

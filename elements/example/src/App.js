@@ -15,6 +15,7 @@ const App = () => {
   const [state, setState] = React.useState('upload');
   const [data, setData] = React.useState(initialData);
   const [filename, setFileName] = React.useState();
+  const [userId, setUserId] = React.useState("default");
 
   const onUploadExample = (data, filename) => {
     // Let's open the mapping UI
@@ -29,16 +30,27 @@ const App = () => {
     setState('preview');
   };
 
-
-
   return (
     <GlueStick
+      user={userId}
       stage={state}
       data={data}
       filename={filename}
       onUpload={onUploadExample}
       onDone={onDoneExample}
-      schema={{ 'Name': {}}}
+      schema={{
+        fields: [
+          {
+            col: "Name",
+            key: "name"
+          },
+          {
+            col: "Phone Number",
+            key: "phoneNumber",
+            validator: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.source
+          }
+        ]
+      }}
     />)
 }
 

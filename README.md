@@ -1,4 +1,8 @@
 # ![gluestick logo](./assets/gs-icon.svg) gluestick by hotglue
+<p>
+  <a href="https://bit.ly/2KBGGq1"><img src="https://img.shields.io/badge/Slack-Join%20Slack-orange" alt="join slack"></a>
+</p>
+
 An open source and self-hosted file CSV import button for your web app. Designed to be a free alternative to flatfile.
 
 ## Motivation
