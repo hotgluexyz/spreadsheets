@@ -43,7 +43,7 @@ def validate_mapping(user, filename, mapping, schema):
             for index, value in invalid_data.items():
                 if pd.isna(value):
                     value = ''
-                invalid_rows.append([{'value': value}])
+                invalid_rows.append(value)
 
             # Tell them which were invalid
             invalid[col] = {
@@ -140,15 +140,13 @@ def preview_df(path):
     # Read only the first 5 rows
     df = pd.read_csv(path, nrows=5)
     cols = list(df.columns)
-    rows = []
-
-    rows.append(list(map(lambda x: {'value': x}, cols)))
+    rows = [cols]
 
     for index, row in df.iterrows():
         row_data = []
 
         for col in cols:
-            row_data.append({'value': row[col]})
+            row_data.append(row[col])
 
         rows.append(row_data)
 

@@ -9,7 +9,7 @@ import classes from './preview.styles.module.css'
 //    [row]
 //    ...
 // }
-const PreviewTable = ({data}) => {
+const PreviewTable = ({data}) => {  
   const rows = data.map((row, index) => {
     const headerClassName = `${index == 0 ? `${classes.row} ${classes.header}` : ''}`
     const rowClassName = `${classes.row} ${index % 2 == 0 ? classes.evenRow : classes.oddRow}` 

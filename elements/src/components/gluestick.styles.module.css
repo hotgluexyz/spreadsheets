@@ -87,9 +87,8 @@
 
 .btnBack {
   grid-area: back;
-
+  cursor: pointer;
   justify-self: flex-start;
-
   background-color: #555a64;
 }
 
@@ -99,9 +98,8 @@
 
 .btnForward {
   grid-area: forward;
-
+  cursor: pointer;
   justify-self: flex-end;
-
   background-color: #28ed8f;
 }
 

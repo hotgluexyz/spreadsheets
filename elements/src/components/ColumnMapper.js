@@ -1,5 +1,4 @@
-import React from 'react'
-import Spreadsheet from "react-spreadsheet";
+import React, { forwardRef, useImperativeHandle } from 'react'
 import { doMapping, validateMapping } from '../api/client'
 import classes from './mapper.styles.module.css'
 
@@ -15,47 +14,6 @@ const clearIcon = require(`./${clearAsset}`)
 const checkIcon = require(`./${checkAsset}`)
 const infoIcon = require(`./${infoAsset}`)
 
-
-const ColumnSelector = ({invalid, requiredCol, availableCols, onSelect, defaultValue}) => {
-    const [col, selectCol] = React.useState(defaultValue ? defaultValue : '');
-    let options = []
-
-    if (availableCols) {
-        availableCols.forEach(c => {
-            options.push(
-                <option key={`${requiredCol}-option-${c}`} value={c}>{c}</option>
-            );
-        });
-    }
-
-    const onChange = (e) => {
-        selectCol(e.target.value);
-        onSelect(requiredCol, e.target.value);
-    };
-
-    return (
-        <tr key={`${requiredCol}-tr`}>
-            <td>
-                {requiredCol}
-            </td>
-            <td>
-                <div className={classes.formControl}>
-                    <label htmlFor={`${requiredCol}-select`}>{requiredCol}</label>
-                    <select id={`${requiredCol}-select`}
-                            value={col}
-                            onChange={onChange}>
-                        {options}
-                    </select>
-                </div>
-            </td>
-            {invalid && <td>
-                {invalid.percent} rows have a valid value
-                {invalid && <Spreadsheet data={invalid.rows} />}
-            </td>}
-        </tr>
-    );
-}
-
 const invert = (obj) => {
     let result = {}
     Object.keys(obj).forEach(k => {
@@ -64,21 +22,13 @@ const invert = (obj) => {
     return result;
 }
 
-const ColumnMapper = ({user, schema, data, filename, onDone}) => {
+const ColumnMapper = forwardRef(({user, schema, data, filename, onDone}, ref) => {
     const [loading, setLoading] = React.useState(false);
     const [mapping, setMapping] = React.useState({});
     const [invalid, setInvalid] = React.useState({});
 
-    const requiredCols = schema && schema.fields && schema.fields.map(f => f.col);
-    const availableCols = data && Object.keys(data);
-
-    const updateMapping = (requiredCol, selectedCol) => {
-        mapping[requiredCol] = selectedCol;
-        setMapping(mapping);
-        handleValidate();
-    }
-
-    const handleMapping = async () => {
+    useImperativeHandle(ref, () => ({
+      async handleMapping() {
         if (Object.keys(mapping).length < requiredCols.length) {
             alert("Oops! You didn't select a matching column for all the required columns.")
             return;
@@ -95,6 +45,16 @@ const ColumnMapper = ({user, schema, data, filename, onDone}) => {
         } finally {
             setLoading(false);
         }
+      }
+    }));
+
+    const requiredCols = schema && schema.fields && schema.fields.map(f => f.col);
+    const availableCols = data && Object.keys(data);
+
+    const updateMapping = (requiredCol, selectedCol) => {
+        mapping[requiredCol] = selectedCol;
+        setMapping(mapping);
+        handleValidate();
     }
 
     const handleValidate = async () => {
@@ -114,17 +74,24 @@ const ColumnMapper = ({user, schema, data, filename, onDone}) => {
         }
     }
 
-    // Create list of selectors for each requiredCol
-    let selectors = [];
+    const HeaderRow = ({importHeader, value}) => {
+      const [col, selectCol] = React.useState(value || '');
+      let options = []
 
-    if (requiredCols && availableCols && mapping) {
-        requiredCols.forEach(col => {
-            selectors.push(<ColumnSelector key={col} invalid={invalid[col]} requiredCol={col} defaultValue={mapping[col]} availableCols={availableCols} onSelect={updateMapping}/>)
-        });
-    }
+      if (availableCols) {
+        availableCols.forEach(c => {
+              options.push(
+                  <option key={`${importHeader}-option-${c}`} value={c}>{c}</option>
+              );
+          });
+      }
 
-    const HeaderRow = ({importHeader}) => (
-      <React.Fragment>
+      const onChange = (e) => {
+        selectCol(e.target.value);
+        updateMapping(importHeader, e.target.value);
+      };
+
+      return (<React.Fragment>
         <div className={`${classes.first} ${classes.row}`} style={{ gridColumn: 1}}>
           <span>#</span>
         </div>
@@ -136,18 +103,22 @@ const ColumnMapper = ({user, schema, data, filename, onDone}) => {
         </div>
         <div className={`${classes.row} ${classes.last}`} style={{ gridColumn: 4}}>
           <div className={classes.inputContainer}>
-            <input type='text' placeholder='COLUMN NAME'></input>
+            <select id={`${importHeader}-select`}
+                    value={col}
+                    onChange={onChange}>
+                {options}
+            </select>
             <img src={clearIcon} />
           </div>
         </div>
-      </React.Fragment>
-    )
+      </React.Fragment>)
+    }
 
-    const ColumnMapper = ({importHeader, previewData}) => {
+    const ColumnMapper = ({importHeader, invalidData}) => {
       return (
         <div className={classes.columnMapRow}>
-          <HeaderRow importHeader={importHeader}/>
-          {previewData.map((data, index) => {
+          <HeaderRow importHeader={importHeader} value={mapping[importHeader]}/>
+          {invalidData && Object.values(invalidData.rows).map((data, index) => {
             const evenOddClassName = index % 2 ? classes.evenRow : classes.oddRow
 
             const classNames = `${classes.row} ${evenOddClassName}`
@@ -163,23 +134,22 @@ const ColumnMapper = ({user, schema, data, filename, onDone}) => {
       )
     }
 
-    const AsideInformation = _ => {
+    const AsideInformation = ({validation}) => {
       return (
         <aside className={classes.aside}>
-          <div><img src={checkIcon}/><p>Column is mapped to <span>FIRST NAME</span></p></div>
-          <div><img src={infoIcon}/><p><span>15 rows</span> are missing values for this column.</p></div>
-          <div><img src={infoIcon}/><p><span>FIRST NAME</span> matches an already existing field.</p></div>
+          {!validation && Object.keys(invalid).length > 0 && <div><img src={checkIcon}/><p>All rows have a valid value for this column.</p></div>}
+          {validation && <div><img src={infoIcon}/><p><span>{validation.percent}</span> rows have a valid value for this column.</p></div>}
         </aside>
       )
     }
 
-    const columnMapRows = data.slice(0).map((row, index) => {
+    const columnMapRows = requiredCols.map((importHeader, index) => {
       return (
         <React.Fragment>
           {index>0 && <div className={classes.spacer}></div> }
           <div style={{ display: 'flex', marginBottom: `${index+1==data.length ? 'inherit' : '2rem' }`}}>
-            <ColumnMapper importHeader='First Name' previewData={['Anna-Liisa', 'Piibe', 'Teet']}/>
-            <AsideInformation />
+            <ColumnMapper importHeader={importHeader} invalidData={invalid[importHeader]}/>
+            <AsideInformation validation={invalid[importHeader]} />
           </div>
         </React.Fragment>
       )
@@ -194,6 +164,6 @@ const ColumnMapper = ({user, schema, data, filename, onDone}) => {
         </div>
       </React.Fragment>
     );
-}
+});
 
 export default ColumnMapper;

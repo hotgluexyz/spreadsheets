@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import FileAcceptor from './FileAcceptor'
 import ColumnMapper from './ColumnMapper'
@@ -16,22 +16,51 @@ const backIcon = require(`./${backIconAsset}`)
 const forwardIcon = require(`./${forwardIconAsset}`)
 const doneIcon = require(`./${doneIconAsset}`)
 
-const GlueStick = ({ stage, data, filename, onUpload, onDone, schema}) => {
+const GlueStick = ({ user, state = 'upload', onBack, onUpload, onDone, schema}) => {
+  const childRef = useRef();
+
+  const [stage, setStage] = React.useState(state);
+  const [mappingData, setMappingData] = React.useState();
+  const [finalData, setFinalData] = React.useState();
+  const [filename, setFileName] = React.useState();
+
+  const onUploadDefault = (data, filename) => {
+    // Start mapping
+    setMappingData(data);
+    setFileName(filename);
+    setStage('mapping');
+  };
+
+  const onDoneDefault = (data) => {
+    // Show preview of final data
+    setFinalData(data);
+    setStage('preview');
+  };
+
+  const onBackDefault = () => {
+    if (stage === 'preview') {
+      setStage('mapping');
+    } else if (stage === 'mapping') {
+      setStage("upload");
+    }
+  };
 
   let component
   switch (stage) {
     case 'mapping':
       component = <ColumnMapper
-                          data={data}
+                          user={user}
+                          ref={childRef}
+                          data={mappingData}
                           filename={filename}
-                          onDone={onDone}
+                          onDone={onDone || onDoneDefault}
                           schema={schema} />
       break
     case 'preview':
-      component = <FilePreview data={data} />
+      component = <FilePreview data={finalData} />
       break
     default:
-      component = <FileAcceptor onUpload={onUpload} />
+      component = <FileAcceptor user={user} onUpload={onUpload || onUploadDefault} />
       break
   }
 
@@ -40,7 +69,7 @@ const GlueStick = ({ stage, data, filename, onUpload, onDone, schema}) => {
       <div className={classes.paper}>
         {component}
         <div className={classes.footer}>
-          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} href='#'><img src={backIcon}/>Back</a> : null }
+          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} onClick={onBack || onBackDefault}><img src={backIcon}/>Back</a> : null }
           <div className={classes.breadcrumbs}>
             <span className={ stage == 'upload' ? classes.activeStage : classes.inactiveStage }>Upload</span>
             <span className={classes.breadcrumbSpacer}></span>
@@ -48,8 +77,8 @@ const GlueStick = ({ stage, data, filename, onUpload, onDone, schema}) => {
             <span className={classes.breadcrumbSpacer}></span>
             <span className={ stage == 'preview' ? classes.activeStage : classes.inactiveStage }>Preview</span>
           </div>
-          { stage == 'mapping' ? <a className={classes.btnForward} href='#'>Continue<img src={forwardIcon}/></a> : null }
-          { stage == 'preview' ? <a className={classes.btnForward} href='#'>Import<img src={doneIcon}/></a> : null }
+          { stage == 'mapping' && <a className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<img src={forwardIcon}/></a> }
+          { stage == 'preview' && <a className={classes.btnForward} href='#'>Import<img src={doneIcon}/></a> }
         </div>
       </div>
     </div>
