@@ -6,7 +6,7 @@ import functools
 from flask import Flask, request, make_response, jsonify
 from requests_toolbelt import MultipartDecoder
 
-from lib import manager
+from lib import manager, util
 
 logger = logging.getLogger("gluestick-api")
 logging.basicConfig(level=logging.DEBUG, format='%(message)s')
@@ -71,6 +71,11 @@ def _get_parts():
 
     return files
 
+@app.route('/status', methods=['GET', 'OPTIONS'])
+@cors
+def status():
+    return corsify({'code': 'success'})
+
 
 @app.route('/file/<user>/map', methods=['POST', 'OPTIONS'])
 @cors
@@ -87,7 +92,11 @@ def do_mapping(user):
 
     # Generate the new file
     data = manager.do_mapping(user, filename, mapping, schema)
-    # TODO: Upload to remote file store, delete local copy
+
+    # Trigger webhook
+    util.trigger_hook(user, util.Lifecycle.MAPPING_COMPLETED)
+
+    # TODO: Upload to target, if any
 
     return corsify({'code': 'success', 'data': data})
 
@@ -107,6 +116,9 @@ def validate_mapping(user):
 
     # Validate the mapping
     data = manager.validate_mapping(user, filename, mapping, schema)
+
+    # Trigger webhook
+    util.trigger_hook(user, util.Lifecycle.MAPPING_VALIDATION)
 
     return corsify({'code': 'success', 'data': data})
 
@@ -132,5 +144,8 @@ def upload_file(user):
 
     # Return the column names, and first 5 rows
     data = manager.parse_data(user, filename)
+
+    # Trigger webhook
+    util.trigger_hook(user, util.Lifecycle.FILE_UPLOADED)
 
     return corsify({'code': 'success', 'data': data, 'filename': filename})

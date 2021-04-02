@@ -1,0 +1,118 @@
+.root {
+  margin: 2rem auto;
+  position: relative;
+  width: fit-content;
+}
+
+.paper {
+  position: relative;
+  display: grid;
+
+  padding: 3rem 4rem;
+
+  border-radius: 1rem;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 150ms ease-out;
+}
+
+.paper:hover {
+  /* should improve this shadow to look like it's properly rising off the page */
+  box-shadow: 0 2.8px 4.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 10px rgba(0, 0, 0, 0.028), 0 12.5px 18.8px rgba(0, 0, 0, 0.035),
+    0 22.3px 33.5px rgba(0, 0, 0, 0.042), 0 41.8px 62.7px rgba(0, 0, 0, 0.05),
+    0 100px 150px rgba(0, 0, 0, 0.07);
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-areas: 'back breadcrumbs forward';
+
+  margin-top: 4rem;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.breadcrumbs {
+  grid-area: breadcrumbs;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.breadcrumbs span {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+}
+
+.breadcrumbSpacer {
+  height: 2px;
+  width: 5rem;
+
+  background-color: rgba(85, 90, 100, 0.1);
+
+  margin: 0rem 1rem;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+
+  padding: 0.5rem 1.25rem;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 0.35rem;
+  transition: opacity 150ms ease-out;
+}
+
+.footer a:hover {
+  opacity: 0.75;
+}
+
+.footer a img {
+  height: 1.25rem;
+  width: auto;
+}
+
+.btnBack {
+  grid-area: back;
+
+  justify-self: flex-start;
+
+  background-color: #555a64;
+}
+
+.btnBack img {
+  margin-right: 1rem;
+}
+
+.btnForward {
+  grid-area: forward;
+
+  justify-self: flex-end;
+
+  background-color: #28ed8f;
+}
+
+.btnForward img {
+  margin-left: 1rem;
+}
+
+.activeStage {
+  color: rgba(85, 90, 100, 0.75);
+}
+
+.inactiveStage {
+  color: rgba(85, 90, 100, 0.25);
+}

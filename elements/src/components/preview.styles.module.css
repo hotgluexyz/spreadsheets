@@ -1,7 +1,50 @@
-.root {
-    margin: auto;
-    margin-bottom: 40px;
-    width: fit-content;
-    margin-top: 40px;
-    position: 'relative';
+h3 {
+  color: #555a64;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: rgba(85, 90, 100, 0.75);
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-auto-columns: fit-content;
+
+  color: #555a64;
+}
+
+.row {
+  padding: 0.6rem 0.75rem;
+}
+
+.header {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 1rem;
+}
+
+.oddRow {
+  /* color: red; */
+}
+
+.evenRow {
+  background-color: rgba(85, 90, 100, 0.075);
+}
+
+.firstCell {
+  margin-left: -1rem;
+  padding-left: 1rem;
+}
+
+.lastCell {
+  margin-right: -1rem;
+  padding-right: 1rem;
+}
+
+.rightAligned {
+  text-align: end;
 }

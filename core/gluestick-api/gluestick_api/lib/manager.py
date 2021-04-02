@@ -51,8 +51,6 @@ def validate_mapping(user, filename, mapping, schema):
                 'rows': invalid_rows
             }
 
-            print(invalid[col])
-
     return invalid
 
 
