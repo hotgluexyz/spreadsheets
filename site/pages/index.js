@@ -4,9 +4,6 @@ import Footer from "../components/footer";
 import { ReactSVG } from "react-svg";
 import { GlueStick } from "gluestick-elements";
 
-import Slack from "../assets/img/logos/slack.svg";
-import GitHub from "../assets/img/logos/github.svg";
-
 export default function Home() {
   return (
     <div>
@@ -27,7 +24,10 @@ export default function Home() {
                     className="alert rounded-lg bg-secondary d-inline-flex align-items-center"
                     style={{ color: "#555A64", marginRight: 15 }}
                   >
-                    <Slack style={{ width: 30 }}/>
+                    <img
+                      src={require("../assets/img/logos/slack.svg")}
+                      style={{ width: 30 }}
+                    />
                     <div className="mx-3">Join the Slack</div>
                   </a>
                   <a
@@ -35,7 +35,10 @@ export default function Home() {
                     className="alert rounded-lg bg-secondary d-inline-flex align-items-center"
                     style={{ color: "#555A64", marginRight: 15 }}
                   >
-                    <GitHub style={{ width: 30 }}/>
+                    <img
+                      src={require("../assets/img/logos/github.svg")}
+                      style={{ width: 30 }}
+                    />
                     <div className="mx-3">Contribute on GitHub</div>
                   </a>
                 </div>
@@ -64,13 +67,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="w-50 h-50 bottom right position-absolute"
-          data-aos="zoom-in"
-          data-aos-delay="500"
-        >
-          <div className="blob h-100 w-100 bottom right bg-primary opacity-90"></div>
         </div>
         <div className="divider divider-bottom mt-5"></div>
       </section>
@@ -102,7 +98,7 @@ export default function Home() {
                   >
                     <div className="d-flex align-items-center">
                       <ReactSVG
-                        src={"/img/icons/folder-check.svg"}
+                        src={require("../assets/img/icons/folder-check.svg")}
                         alt="mapping icon"
                         beforeInjection={(svg) => {
                           svg.classList.add("injected-svg");
@@ -126,7 +122,7 @@ export default function Home() {
                   >
                     <div className="d-flex align-items-center">
                       <ReactSVG
-                        src={"/img/icons/file-cloud.svg"}
+                        src={require("../assets/img/icons/file-cloud.svg")}
                         alt="mapping icon"
                         beforeInjection={(svg) => {
                           svg.classList.add("injected-svg");
@@ -150,7 +146,7 @@ export default function Home() {
                   >
                     <div className="d-flex align-items-center">
                       <ReactSVG
-                        src={"/img/icons/cloud-1.svg"}
+                        src={require("../assets/img/icons/cloud-1.svg")}
                         alt="deployment icon"
                         beforeInjection={(svg) => {
                           svg.classList.add("injected-svg");
@@ -265,7 +261,7 @@ export default function Home() {
                     <div className="d-flex">
                       <div className="mr-3 mr-md-4">
                         <ReactSVG
-                          src={"/img/icons/puzzle.svg"}
+                          src={require("../assets/img/icons/puzzle.svg")}
                           alt="reusable icon"
                           beforeInjection={(svg) => {
                             svg.classList.add("injected-svg");
@@ -294,7 +290,7 @@ export default function Home() {
                     <div className="d-flex">
                       <div className="mr-3 mr-md-4">
                         <ReactSVG
-                          src={"/img/icons/terminal.svg"}
+                          src={require("../assets/img/icons/terminal.svg")}
                           alt="reusable icon"
                           beforeInjection={(svg) => {
                             svg.classList.add("injected-svg");

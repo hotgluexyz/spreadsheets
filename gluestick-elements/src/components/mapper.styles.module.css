@@ -15,7 +15,7 @@ p {
   color: #555a64;
 }
 
-.columnMapRow img {
+.columnMapRow svg {
   height: 1.5rem;
 }
 
@@ -29,31 +29,16 @@ p {
 
 .inputContainer select {
   color: #555a64;
-  border: none;
-  border-bottom: 0.15rem solid rgba(85, 90, 100, 0.25);
-  border-top: 0.15rem solid rgba(85, 90, 100, 0.25);
-  border-left: 0.15rem solid rgba(85, 90, 100, 0.25);
+  border: 0.15rem solid rgba(85, 90, 100, 0.25);
 
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  border-radius: 0.5rem;
 
   padding: 0.25rem 0rem;
   padding-left: 0.75rem;
+  padding-right: 0.75rem;
 
   font-weight: bold;
   width: 100%;
-}
-
-.inputContainer img {
-  border-bottom: 0.15rem solid rgba(85, 90, 100, 0.25);
-  border-right: 0.15rem solid rgba(85, 90, 100, 0.25);
-  border-top: 0.15rem solid rgba(85, 90, 100, 0.25);
-
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-
-  padding: 0.25rem 0.75rem;
-  padding-right: 0.75rem;
 }
 
 .row {
@@ -93,7 +78,7 @@ aside div {
   display: flex;
 }
 
-aside img {
+aside svg {
   height: 1.5rem;
   margin-right: 0.5rem;
 }

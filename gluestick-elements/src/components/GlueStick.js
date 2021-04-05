@@ -6,15 +6,9 @@ import FilePreview from './FilePreview'
 
 import classes from './gluestick.styles.module.css'
 
-import backIconAsset from '../assets/arrow_back.svg'
-import forwardIconAsset from '../assets/arrow_forward.svg'
-import doneIconAsset from '../assets/check.svg'
-
-// Importing images is a bit clunky with create-react-library, got my solution from here.
-// https://github.com/transitive-bullshit/create-react-library/issues/220#issuecomment-771578208
-const backIcon = require(`./${backIconAsset}`)
-const forwardIcon = require(`./${forwardIconAsset}`)
-const doneIcon = require(`./${doneIconAsset}`)
+import ArrowBackIcon from './icons/ArrowBackIcon';
+import ArrowForwardIcon from './icons/ArrowForwardIcon';
+import CheckIcon from './icons/CheckIcon';
 
 const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone, schema}) => {
   const childRef = useRef();
@@ -70,7 +64,7 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
       <div className={classes.paper}>
         {component}
         <div className={classes.footer}>
-          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} onClick={onBack || onBackDefault}><img src={backIcon.default || backIcon}/>Back</a> : null }
+          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} onClick={onBack || onBackDefault}><ArrowBackIcon/>Back</a> : null }
           <div className={classes.breadcrumbs}>
             <span className={ stage == 'upload' ? classes.activeStage : classes.inactiveStage }>Upload</span>
             <span className={classes.breadcrumbSpacer}></span>
@@ -78,8 +72,8 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
             <span className={classes.breadcrumbSpacer}></span>
             <span className={ stage == 'preview' ? classes.activeStage : classes.inactiveStage }>Preview</span>
           </div>
-          { stage == 'mapping' && <a className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<img src={forwardIcon.default || forwardIcon}/></a> }
-          { stage == 'preview' && <a className={classes.btnForward} href='#'>Import<img src={doneIcon.default || doneIcon}/></a> }
+          { stage == 'mapping' && <a className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<ArrowForwardIcon/></a> }
+          { stage == 'preview' && <a className={classes.btnForward} href='#'>Import<CheckIcon/></a> }
         </div>
       </div>
     </div>
