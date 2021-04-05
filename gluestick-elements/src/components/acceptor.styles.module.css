@@ -1,0 +1,107 @@
+h3 {
+  color: rgba(85, 90, 100, 1);
+  margin-bottom: 1rem;
+}
+
+p {
+  color: rgba(85, 90, 100, 0.75);
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.uploadArea {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  grid-column-gap: 2rem;
+  grid-template-areas: 'icon text' 'icon subtext';
+
+  margin: 1.5rem 0rem;
+  padding: 2rem 5rem;
+
+  /* width: 100%; */
+  width: 40rem;
+
+  /* This is necessary to avoid overflowing the container when width is set to 100% */
+  box-sizing: border-box;
+
+  background-color: #f8f8f8;
+  border-radius: 1rem;
+
+  transition: background-color 150ms ease-out;
+}
+
+.uploadArea:hover {
+  background-color: #f4f4f4;
+}
+
+.uploadArea:hover .text {
+  color: rgba(85, 90, 100, 0.75);
+}
+
+.uploadArea:hover .subtext {
+  color: rgba(250, 82, 64, 1);
+}
+
+.uploadArea:hover .icon {
+  opacity: 0.4;
+}
+
+.icon {
+  justify-self: center;
+  align-self: center;
+
+  grid-area: icon;
+  height: 60%;
+  max-width: 100%;
+
+  /* TODO: Implement proper svg colors. */
+  opacity: 0.2;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
+  transition: opacity 150ms ease-out;
+}
+
+.text {
+  grid-area: text;
+  align-self: end;
+
+  font-weight: 500px;
+  text-align: left;
+
+  margin-bottom: 0.25rem;
+  color: rgba(85, 90, 100, 0.5);
+
+  transition: color 150ms ease-out;
+}
+
+.subtext {
+  grid-area: subtext;
+  align-self: start;
+
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+
+  font-size: 0.75rem;
+  font-weight: 300px;
+  text-align: left;
+
+  transition: color 150ms ease-out;
+
+  color: rgba(250, 82, 64, 0.5);
+  font-weight: bold;
+}
+
+.fileInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+
+  cursor: pointer;
+}

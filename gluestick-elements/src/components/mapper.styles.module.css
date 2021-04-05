@@ -1,0 +1,107 @@
+h3 {
+  color: #555a64;
+}
+
+p {
+  color: #555a64;
+}
+
+.columnMapRow {
+  display: grid;
+  grid-template-columns: 2rem minmax(12.5rem, auto) 4rem minmax(15rem, auto);
+
+  align-items: center;
+
+  color: #555a64;
+}
+
+.columnMapRow img {
+  height: 1.5rem;
+}
+
+.columnMapRow span {
+  text-transform: uppercase;
+}
+
+.inputContainer {
+  display: flex;
+}
+
+.inputContainer select {
+  color: #555a64;
+  border: none;
+  border-bottom: 0.15rem solid rgba(85, 90, 100, 0.25);
+  border-top: 0.15rem solid rgba(85, 90, 100, 0.25);
+  border-left: 0.15rem solid rgba(85, 90, 100, 0.25);
+
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+
+  padding: 0.25rem 0rem;
+  padding-left: 0.75rem;
+
+  font-weight: bold;
+  width: 100%;
+}
+
+.inputContainer img {
+  border-bottom: 0.15rem solid rgba(85, 90, 100, 0.25);
+  border-right: 0.15rem solid rgba(85, 90, 100, 0.25);
+  border-top: 0.15rem solid rgba(85, 90, 100, 0.25);
+
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+
+  padding: 0.25rem 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.row {
+  padding: 0.6rem 0.75rem;
+}
+
+.oddRow {
+  /* color: red; */
+}
+
+.evenRow {
+  background-color: rgba(85, 90, 100, 0.075);
+}
+
+.first {
+  font-weight: bold;
+  margin-left: -1rem;
+  padding-left: 1rem;
+}
+
+.last {
+  padding-right: 1rem;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  justify-content: center;
+}
+
+aside span {
+  font-weight: bold;
+}
+
+aside div {
+  display: flex;
+}
+
+aside img {
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.spacer {
+  margin: 0rem 5rem;
+  margin-bottom: 1.5rem;
+  height: 0.15rem;
+  background-color: rgba(85, 90, 100, 0.075);
+  border-radius: 50rem;
+}
