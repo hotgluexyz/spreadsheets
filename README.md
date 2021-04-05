@@ -1,39 +1,83 @@
 # ![gluestick logo](./assets/gs-icon.svg) gluestick by hotglue
 <p>
-  <a href="https://bit.ly/2KBGGq1"><img src="https://img.shields.io/badge/Slack-Join%20Slack-orange" alt="join slack"></a>
+  <a href="https://gluestick.xyz"><img src="https://img.shields.io/badge/website-View%20demo-red" alt="website"></a>
+  <a href="https://docs.gluestick.xyz"><img src="https://img.shields.io/badge/docs-Read%20docs-blueviolet" alt="docs"></a>
+  <a href="https://bit.ly/2KBGGq1"><img src="https://img.shields.io/badge/Slack-Join%20Slack-blue" alt="join slack"></a>
+  <a href="https://www.npmjs.com/package/gluestick-elements"><img src="https://img.shields.io/npm/v/gluestick-elements.svg" alt="npm package"></a>
 </p>
 
-An open source and self-hosted file CSV import button for your web app. Designed to be a free alternative to flatfile.
+An open source and self-hosted file CSV import button for your web app.
 
-## Motivation
+---
 
+[![demo](./assets/FileAcceptor.png)](https://gluestick.xyz)
+
+## Info
+---
+
+### Motivation
 We want to provide a light-weight and simple way to integrate user data from CSVs, with a great UI and strong mapping functionality. 
 
-## Functionality
+### Links
+- [Homepage](https://gluestick.xyz)
+- [Documentation](https://docs.gluestick.xyz)
+- [Source](https://github.com/hotgluexyz/gluestick)
+- [Issues](https://github.com/hotgluexyz/gluestick/issues)
+- [Slack](https://bit.ly/2KBGGq1)
 
-### Admin
-1. Define the schema (likely directly in JSON in some type of CLI)
-2. Define a target (see Meltano target CLI configuration)
-3. Run the backend (see below for details)
-4. Accept the files (directly in the browser via JSON serialized data, or to some target)
+### Demos
+- [Interactive Demo](https://gluestick.xyz)
+- [CodeSandbox Demo](https://codesandbox.io/s/gluestick-demo-1c1dl)
 
-### User (React elements)
+## gluestick-elements
+---
+Simple reusable React components that handle CSV uploads, mapping, and validation.
+
+### Functionality
 1. Upload file
-2. Do necessary mapping
-3. Verify data looks correct
+2. Do column mapping
+3. Validate data + preview final output
 4. Approve (sent to hook / piped to target)
 
-## Code bases
+### Install
 
-### Elements
+```bash
+npm install --save gluestick-elements
+```
 
-Simple reusable React components that handle file upload, file mapping, and (maybe? allow passing the mapping from the front end). Should be able to work with any backend, not just ours.
+### Usage
 
-### Back-end
+```jsx
+import React, { Component } from 'react'
 
-The real magic is a Python + Docker based mapping code that can handle very large files (ie. >10GB). 
+import {GlueStick} from 'gluestick-elements'
+import 'gluestick-elements/dist/index.css'
 
-We’d offer a Python-based Flask API (also wrapped in Docker) to access it and self-host. Similar to meltano.
+class Example extends Component {
+  render() {
+    return (<GlueStick
+      user={"default"}
+      endpoint={"https://gluestick-api.herokuapp.com"}
+      schema={{
+        fields: [
+          {
+            col: "Name",
+            key: "name"
+          },
+          {
+            col: "Phone Number",
+            key: "phoneNumber",
+            validator: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+              .source
+          }
+        ]
+      }}
+    />);
+  }
+}
+```
 
-Could also have automatic targets rather than having to send to a web service yourself (S3, Blob Storage, etc.)
+## Backend
+---
+The real magic is a Python + Docker based mapping API that leverages data science tools to manipulate CSVs. 
 
