@@ -16,7 +16,7 @@ const backIcon = require(`./${backIconAsset}`)
 const forwardIcon = require(`./${forwardIconAsset}`)
 const doneIcon = require(`./${doneIconAsset}`)
 
-const GlueStick = ({ user, state = 'upload', onBack, onUpload, onDone, schema}) => {
+const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone, schema}) => {
   const childRef = useRef();
 
   const [stage, setStage] = React.useState(state);
@@ -50,6 +50,7 @@ const GlueStick = ({ user, state = 'upload', onBack, onUpload, onDone, schema}) 
     case 'mapping':
       component = <ColumnMapper
                           user={user}
+                          endpoint={endpoint}
                           ref={childRef}
                           data={mappingData}
                           filename={filename}
@@ -60,7 +61,7 @@ const GlueStick = ({ user, state = 'upload', onBack, onUpload, onDone, schema}) 
       component = <FilePreview data={finalData} />
       break
     default:
-      component = <FileAcceptor user={user} onUpload={onUpload || onUploadDefault} />
+      component = <FileAcceptor user={user} endpoint={endpoint} onUpload={onUpload || onUploadDefault} />
       break
   }
 

@@ -27,4 +27,4 @@ WORKDIR /home/api
 RUN pip3 install -r requirements.txt
 
 # Start the API
-ENTRYPOINT gunicorn --bind 0.0.0.0:5000 app:app
+CMD gunicorn --bind 0.0.0.0:$PORT app:app

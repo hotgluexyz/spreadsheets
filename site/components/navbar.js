@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GluestickLogo from "../assets/img/gluestick.svg";
 
 const Navbar = (props) => {
   return (
@@ -7,11 +8,7 @@ const Navbar = (props) => {
         <div className="container">
           <Link href="/">
             <a className="navbar-brand navbar-brand-dynamic-color fade-page">
-              <img
-                alt="gluestick"
-                src={require("../assets/img/gluestick.svg")}
-                className="header-logo"
-              />
+              <GluestickLogo className="header-logo"/>
             </a>
           </Link>
           <div className="d-flex align-items-center order-lg-3">

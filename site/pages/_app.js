@@ -3,6 +3,7 @@ import Head from 'next/head'
 
 import '../assets/css/theme.css'
 import '../assets/css/custom.css'
+import "gluestick-elements/dist/index.css";
 
 function App({ Component, pageProps }) {
   React.useEffect(() => {

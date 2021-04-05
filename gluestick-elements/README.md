@@ -15,12 +15,29 @@ npm install --save gluestick-elements
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'gluestick-elements'
+import {GlueStick} from 'gluestick-elements'
 import 'gluestick-elements/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return (<GlueStick
+      user={"default"}
+      endpoint={"https://gluestick-api.herokuapp.com"}
+      schema={{
+        fields: [
+          {
+            col: "Name",
+            key: "name"
+          },
+          {
+            col: "Phone Number",
+            key: "phoneNumber",
+            validator: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+              .source
+          }
+        ]
+      }}
+    />);
   }
 }
 ```

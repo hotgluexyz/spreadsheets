@@ -21,7 +21,7 @@ function Footer(props) {
             <ul className="list-unstyled d-flex mb-0">
               <li className="mx-3">
                 <a href="https://bit.ly/2KBGGq1" className="hover-fade-out">
-                    <ReactSVG src={require("../assets/img/logos/slack.svg")} alt="Slack icon" beforeInjection={svg => {
+                    <ReactSVG src={"/img/logos/slack.svg"} alt="Slack icon" beforeInjection={svg => {
                         svg.classList.add('injected-svg')
                         svg.classList.add('icon')
                         svg.classList.add('icon-xs')
@@ -31,7 +31,7 @@ function Footer(props) {
               </li>
               <li className="mx-3">
                 <a href="https://github.com/hotgluexyz/gluestick" className="hover-fade-out">
-                    <ReactSVG src={require("../assets/img/logos/github.svg")} alt="GitHub icon" style={{fill: "#fff"}} beforeInjection={svg => {
+                    <ReactSVG src={"/img/logos/github.svg"} alt="GitHub icon" style={{fill: "#fff"}} beforeInjection={svg => {
                         svg.classList.add('injected-svg')
                         svg.classList.add('icon')
                         svg.classList.add('icon-xs')

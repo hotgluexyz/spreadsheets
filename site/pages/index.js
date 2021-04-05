@@ -2,6 +2,10 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 
 import { ReactSVG } from "react-svg";
+import { GlueStick } from "gluestick-elements";
+
+import Slack from "../assets/img/logos/slack.svg";
+import GitHub from "../assets/img/logos/github.svg";
 
 export default function Home() {
   return (
@@ -11,7 +15,7 @@ export default function Home() {
       <section className="bg-light o-hidden pt-5 pb-0">
         <div className="container">
           <div className="row align-items-center justify-content-between">
-            <div className="col-lg-6 d-flex flex-column text-center text-lg-left mb-5 mb-lg-0">
+            <div className="col-lg-5 d-flex flex-column text-center text-lg-left mb-5 mb-lg-0">
               <div className="pr-xl-5">
                 <h1 className="display-3">Import spreadsheets with ease.</h1>
                 <p className="lead">
@@ -23,10 +27,7 @@ export default function Home() {
                     className="alert rounded-lg bg-secondary d-inline-flex align-items-center"
                     style={{ color: "#555A64", marginRight: 15 }}
                   >
-                    <img
-                      src={require("../assets/img/logos/slack.svg")}
-                      style={{ width: 30 }}
-                    />
+                    <Slack style={{ width: 30 }}/>
                     <div className="mx-3">Join the Slack</div>
                   </a>
                   <a
@@ -34,24 +35,32 @@ export default function Home() {
                     className="alert rounded-lg bg-secondary d-inline-flex align-items-center"
                     style={{ color: "#555A64", marginRight: 15 }}
                   >
-                    <img
-                      src={require("../assets/img/logos/github.svg")}
-                      style={{ width: 30 }}
-                    />
+                    <GitHub style={{ width: 30 }}/>
                     <div className="mx-3">Contribute on GitHub</div>
                   </a>
                 </div>
               </div>
             </div>
-            <div className="col">
+            <div className="col-lg-5">
               <div className="row justify-content-center" data-jarallax-element="-50">
-                <div class="col-md-12" data-aos="zoom-in" data-aos-delay="250">
-                  <img
-                    className="img-fluid"
-                    src={require("../assets/img/preview/FileAcceptor.png")}
-                    alt="gluestick upload"
+                  <GlueStick
+                    user={"default"}
+                    endpoint={"https://gluestick-api.herokuapp.com"}
+                    schema={{
+                      fields: [
+                        {
+                          col: "Name",
+                          key: "name"
+                        },
+                        {
+                          col: "Phone Number",
+                          key: "phoneNumber",
+                          validator: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+                            .source
+                        }
+                      ]
+                    }}
                   />
-                </div>
               </div>
             </div>
           </div>
@@ -93,7 +102,7 @@ export default function Home() {
                   >
                     <div className="d-flex align-items-center">
                       <ReactSVG
-                        src={require("../assets/img/icons/folder-check.svg")}
+                        src={"/img/icons/folder-check.svg"}
                         alt="mapping icon"
                         beforeInjection={(svg) => {
                           svg.classList.add("injected-svg");
@@ -117,7 +126,7 @@ export default function Home() {
                   >
                     <div className="d-flex align-items-center">
                       <ReactSVG
-                        src={require("../assets/img/icons/file-cloud.svg")}
+                        src={"/img/icons/file-cloud.svg"}
                         alt="mapping icon"
                         beforeInjection={(svg) => {
                           svg.classList.add("injected-svg");
@@ -141,7 +150,7 @@ export default function Home() {
                   >
                     <div className="d-flex align-items-center">
                       <ReactSVG
-                        src={require("../assets/img/icons/cloud-1.svg")}
+                        src={"/img/icons/cloud-1.svg"}
                         alt="deployment icon"
                         beforeInjection={(svg) => {
                           svg.classList.add("injected-svg");
@@ -172,7 +181,7 @@ export default function Home() {
                           CSV files, and catch malformed data before ingestion.
                         </p>
                       </div>
-                      <div class="col-md-12">
+                      <div className="col-md-12">
                         <img
                           src={require("../assets/img/preview/MapData.png")}
                           alt="gluestick mapping"
@@ -198,7 +207,7 @@ export default function Home() {
                           process new data with webhooks.
                         </p>
                       </div>
-                      <div class="col-md-12">
+                      <div className="col-md-12">
                         <img
                           src={require("../assets/img/preview/Upload.png")}
                           alt="gluestick upload"
@@ -224,7 +233,7 @@ export default function Home() {
                           <a href="#">docs.</a>
                         </p>
                       </div>
-                      <div class="col-md-12">
+                      <div className="col-md-12">
                         <img
                           src={require("../assets/img/icons/terraform.png")}
                           alt="terraform"
@@ -256,7 +265,7 @@ export default function Home() {
                     <div className="d-flex">
                       <div className="mr-3 mr-md-4">
                         <ReactSVG
-                          src={require("../assets/img/icons/puzzle.svg")}
+                          src={"/img/icons/puzzle.svg"}
                           alt="reusable icon"
                           beforeInjection={(svg) => {
                             svg.classList.add("injected-svg");
@@ -285,7 +294,7 @@ export default function Home() {
                     <div className="d-flex">
                       <div className="mr-3 mr-md-4">
                         <ReactSVG
-                          src={require("../assets/img/icons/terminal.svg")}
+                          src={"/img/icons/terminal.svg"}
                           alt="reusable icon"
                           beforeInjection={(svg) => {
                             svg.classList.add("injected-svg");
@@ -312,7 +321,7 @@ export default function Home() {
                 className="row justify-content-center"
                 data-jarallax-element="-50"
               >
-                <div class="col-md-12" data-aos="zoom-in" data-aos-delay="250">
+                <div className="col-md-12" data-aos="zoom-in" data-aos-delay="250">
                   <img
                     className="img-fluid position-relative"
                     src={require("../assets/img/preview/FileAcceptor.png")}

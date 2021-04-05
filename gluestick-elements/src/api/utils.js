@@ -19,13 +19,13 @@ class APIError extends ExtendableError {
     errorObj = null;
 }
 
-const doRequest = async (url, body = {}, options = {}) => {
+const doRequest = async (url, body = {}, endpoint = `http://localhost:5000`) => {
 	if (!body.headers) {
 		body.headers = {'Content-Type': "application/json"};
 	}
 	// delete any undefined headers
 	Object.keys(body.headers).forEach(key => body.headers[key] === undefined ? delete body.headers[key] : {});
-    url = `http://localhost:5000/${url}`
+    url = `${endpoint}/${url}`
 
 	const response = await fetch(url, body);
 
@@ -49,7 +49,7 @@ const doRequest = async (url, body = {}, options = {}) => {
 }
 
 export const Request = {
-	GET : (url,body, options) => doRequest(url,{...{method:'GET'}, ...body }, options),
-	DELETE : (url,body) => doRequest(url,{...{method:'DELETE'}, ...body }),
-	POST : (url,body) => doRequest(url,{...{method:'POST'}, ...body }),
+	GET : (url,body, endpoint) => doRequest(url,{...{method:'GET'}, ...body }, endpoint),
+	DELETE : (url,body, endpoint) => doRequest(url,{...{method:'DELETE'}, ...body }, endpoint),
+	POST : (url,body, endpoint) => doRequest(url,{...{method:'POST'}, ...body }, endpoint)
 };
