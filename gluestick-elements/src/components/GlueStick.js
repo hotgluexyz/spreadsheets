@@ -70,7 +70,7 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
       <div className={classes.paper}>
         {component}
         <div className={classes.footer}>
-          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} onClick={onBack || onBackDefault}><img src={backIcon}/>Back</a> : null }
+          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} onClick={onBack || onBackDefault}><img src={backIcon.default || backIcon}/>Back</a> : null }
           <div className={classes.breadcrumbs}>
             <span className={ stage == 'upload' ? classes.activeStage : classes.inactiveStage }>Upload</span>
             <span className={classes.breadcrumbSpacer}></span>
@@ -78,8 +78,8 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
             <span className={classes.breadcrumbSpacer}></span>
             <span className={ stage == 'preview' ? classes.activeStage : classes.inactiveStage }>Preview</span>
           </div>
-          { stage == 'mapping' && <a className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<img src={forwardIcon}/></a> }
-          { stage == 'preview' && <a className={classes.btnForward} href='#'>Import<img src={doneIcon}/></a> }
+          { stage == 'mapping' && <a className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<img src={forwardIcon.default || forwardIcon}/></a> }
+          { stage == 'preview' && <a className={classes.btnForward} href='#'>Import<img src={doneIcon.default || doneIcon}/></a> }
         </div>
       </div>
     </div>

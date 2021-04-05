@@ -99,7 +99,7 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
           <span style={{ fontWeight: 'bold' }}>{importHeader}</span>
         </div>
         <div className={classes.row} style={{ gridColumn: 3}}>
-          <span><img src={arrowIcon}/></span>
+          <span><img src={arrowIcon.default || arrowIcon}/></span>
         </div>
         <div className={`${classes.row} ${classes.last}`} style={{ gridColumn: 4}}>
           <div className={classes.inputContainer}>
@@ -108,7 +108,7 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
                     onChange={onChange}>
                 {options}
             </select>
-            <img src={clearIcon} />
+            <img src={clearIcon.default || clearIcon} />
           </div>
         </div>
       </React.Fragment>)
@@ -137,8 +137,8 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
     const AsideInformation = ({validation}) => {
       return (
         <aside className={classes.aside}>
-          {!validation && Object.keys(invalid).length > 0 && <div><img src={checkIcon}/><p>All rows have a valid value for this column.</p></div>}
-          {validation && <div><img src={infoIcon}/><p><span>{validation.percent}</span> rows have a valid value for this column.</p></div>}
+          {!validation && Object.keys(invalid).length > 0 && <div><img src={checkIcon.default || checkIcon}/><p>All rows have a valid value for this column.</p></div>}
+          {validation && <div><img src={infoIcon.default || infoIcon}/><p><span>{validation.percent}</span> rows have a valid value for this column.</p></div>}
         </aside>
       )
     }

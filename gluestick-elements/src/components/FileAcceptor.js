@@ -26,7 +26,7 @@ const FileAcceptor = ({user, endpoint, onUpload}) => {
       <h3 className={classes.h3}>Upload your data</h3>
       <p className={classes.p}>To begin the data import, please upload a CSV or XML file.</p>
       <div className={classes.uploadArea}>
-        <img className={classes.icon} src={icon} />
+        <img className={classes.icon} src={icon.default || icon} />
         <h3 className={classes.text}>Drag & Drop a File</h3>
         <span className={classes.subtext}>OR SELECT A FILE</span>
         <input
