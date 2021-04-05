@@ -16,11 +16,11 @@ const backIcon = require(`./${backIconAsset}`)
 const forwardIcon = require(`./${forwardIconAsset}`)
 const doneIcon = require(`./${doneIconAsset}`)
 
-const GlueStick = ({ user, state = 'upload', onBack, onUpload, onDone, schema}) => {
+const GlueStick = ({ user, state = 'mapping', onBack, onUpload, onDone, schema}) => {
   const childRef = useRef();
 
   const [stage, setStage] = React.useState(state);
-  const [mappingData, setMappingData] = React.useState();
+  const [mappingData, setMappingData] = React.useState({});
   const [finalData, setFinalData] = React.useState();
   const [filename, setFileName] = React.useState();
 

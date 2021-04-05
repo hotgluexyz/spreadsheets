@@ -90,6 +90,8 @@
   cursor: pointer;
   justify-self: flex-start;
   background-color: #555a64;
+
+  margin-right: 3rem;
 }
 
 .btnBack img {
@@ -101,6 +103,8 @@
   cursor: pointer;
   justify-self: flex-end;
   background-color: #28ed8f;
+
+  margin-left: 3rem;
 }
 
 .btnForward img {
