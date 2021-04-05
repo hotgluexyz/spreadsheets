@@ -13,7 +13,6 @@ An open source and self-hosted file CSV import button for your web app.
 [![demo](./assets/FileAcceptor.png)](https://gluestick.xyz)
 
 ## Info
----
 
 ### Motivation
 We want to provide a light-weight and simple way to integrate user data from CSVs, with a great UI and strong mapping functionality. 
@@ -30,7 +29,7 @@ We want to provide a light-weight and simple way to integrate user data from CSV
 - [CodeSandbox Demo](https://codesandbox.io/s/gluestick-demo-1c1dl)
 
 ## gluestick-elements
----
+
 Simple reusable React components that handle CSV uploads, mapping, and validation.
 
 ### Functionality
@@ -78,6 +77,6 @@ class Example extends Component {
 ```
 
 ## Backend
----
+
 The real magic is a Python + Docker based mapping API that leverages data science tools to manipulate CSVs. 
 
