@@ -1,6 +1,6 @@
 # ![gluestick logo](./assets/gs-icon.svg) gluestick by hotglue
 <p>
-  <a href="https://gluestick.xyz"><img src="https://img.shields.io/badge/website-View%20demo-red" alt="website"></a>
+  <a href="https://1c1dl.csb.app"><img src="https://img.shields.io/badge/demo-View%20demo-red" alt="demo"></a>
   <a href="https://docs.gluestick.xyz"><img src="https://img.shields.io/badge/docs-Read%20docs-blueviolet" alt="docs"></a>
   <a href="https://bit.ly/2KBGGq1"><img src="https://img.shields.io/badge/Slack-Join%20Slack-blue" alt="join slack"></a>
   <a href="https://www.npmjs.com/package/gluestick-elements"><img src="https://img.shields.io/npm/v/gluestick-elements.svg" alt="npm package"></a>
@@ -10,7 +10,7 @@ An open source and self-hosted file CSV import button for your web app.
 
 ---
 
-[![demo](./assets/FileAcceptor.png)](https://gluestick.xyz)
+[![demo](./assets/FileAcceptor.png)](https://1c1dl.csb.app)
 
 ## Info
 
@@ -24,9 +24,9 @@ We want to provide a light-weight and simple way to integrate user data from CSV
 - [Issues](https://github.com/hotgluexyz/gluestick/issues)
 - [Slack](https://bit.ly/2KBGGq1)
 
-### Demos
-- [Interactive Demo](https://gluestick.xyz)
-- [CodeSandbox Demo](https://codesandbox.io/s/gluestick-demo-1c1dl)
+### Sandbox
+- [CodeSandbox Demo](https://1c1dl.csb.app)
+- [CodeSandbox Sample](https://codesandbox.io/s/gluestick-demo-1c1dl)
 
 ## gluestick-elements
 

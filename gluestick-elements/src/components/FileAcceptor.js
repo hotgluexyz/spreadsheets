@@ -2,11 +2,7 @@ import React from 'react'
 import { uploadFiles } from '../api/client'
 import classes from './acceptor.styles.module.css'
 
-import iconAsset from '../assets/upload_file.svg'
-
-// Importing images is a bit clunky with create-react-library, got my solution from here.
-// https://github.com/transitive-bullshit/create-react-library/issues/220#issuecomment-771578208
-const icon = require(`./${iconAsset}`)
+import UploadFileIcon from './icons/UploadFileIcon';
 
 const FileAcceptor = ({user, endpoint, onUpload}) => {
   const onUploadInternal = (e) => {
@@ -26,7 +22,7 @@ const FileAcceptor = ({user, endpoint, onUpload}) => {
       <h3 className={classes.h3}>Upload your data</h3>
       <p className={classes.p}>To begin the data import, please upload a CSV or XML file.</p>
       <div className={classes.uploadArea}>
-        <img className={classes.icon} src={icon} />
+        <UploadFileIcon className={classes.icon} />
         <h3 className={classes.text}>Drag & Drop a File</h3>
         <span className={classes.subtext}>OR SELECT A FILE</span>
         <input

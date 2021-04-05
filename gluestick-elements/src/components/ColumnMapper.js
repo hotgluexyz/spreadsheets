@@ -2,17 +2,9 @@ import React, { forwardRef, useImperativeHandle } from 'react'
 import { doMapping, validateMapping } from '../api/client'
 import classes from './mapper.styles.module.css'
 
-import arrowAsset from '../assets/arrow_forward_dark.svg'
-import clearAsset from '../assets/clear.svg'
-import checkAsset from '../assets/check_green.svg'
-import infoAsset from '../assets/info.svg'
-
-// Importing images is a bit clunky with create-react-library, got my solution from here.
-// https://github.com/transitive-bullshit/create-react-library/issues/220#issuecomment-771578208
-const arrowIcon = require(`./${arrowAsset}`)
-const clearIcon = require(`./${clearAsset}`)
-const checkIcon = require(`./${checkAsset}`)
-const infoIcon = require(`./${infoAsset}`)
+import ArrowIcon from './icons/ArrowForwardIcon';
+import CheckIcon from './icons/CheckIcon';
+import InfoIcon from './icons/InfoIcon';
 
 const invert = (obj) => {
     let result = {}
@@ -99,7 +91,7 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
           <span style={{ fontWeight: 'bold' }}>{importHeader}</span>
         </div>
         <div className={classes.row} style={{ gridColumn: 3}}>
-          <span><img src={arrowIcon}/></span>
+          <span><ArrowIcon fillColor={"rgb(85,90,100)"}/></span>
         </div>
         <div className={`${classes.row} ${classes.last}`} style={{ gridColumn: 4}}>
           <div className={classes.inputContainer}>
@@ -108,7 +100,6 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
                     onChange={onChange}>
                 {options}
             </select>
-            <img src={clearIcon} />
           </div>
         </div>
       </React.Fragment>)
@@ -137,8 +128,8 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
     const AsideInformation = ({validation}) => {
       return (
         <aside className={classes.aside}>
-          {!validation && Object.keys(invalid).length > 0 && <div><img src={checkIcon}/><p>All rows have a valid value for this column.</p></div>}
-          {validation && <div><img src={infoIcon}/><p><span>{validation.percent}</span> rows have a valid value for this column.</p></div>}
+          {!validation && Object.keys(invalid).length > 0 && <div><CheckIcon fillColor={"rgb(40,237,143)"}/><p>All rows have a valid value for this column.</p></div>}
+          {validation && <div><InfoIcon/><p><span>{validation.percent}</span> rows have a valid value for this column.</p></div>}
         </aside>
       )
     }

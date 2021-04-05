@@ -94,8 +94,9 @@
   margin-right: 3rem;
 }
 
-.btnBack img {
+.btnBack svg {
   margin-right: 1rem;
+  width: 1.5rem;
 }
 
 .btnForward {
@@ -107,8 +108,9 @@
   margin-left: 3rem;
 }
 
-.btnForward img {
+.btnForward svg {
   margin-left: 1rem;
+  width: 1.5rem;
 }
 
 .activeStage {
