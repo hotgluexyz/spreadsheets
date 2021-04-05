@@ -8,8 +8,7 @@ p {
 
 .columnMapRow {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-auto-columns: fit-content;
+  grid-template-columns: 2rem minmax(12.5rem, auto) 4rem minmax(15rem, auto);
 
   align-items: center;
 
@@ -28,7 +27,7 @@ p {
   display: flex;
 }
 
-.inputContainer input {
+.inputContainer select {
   color: #555a64;
   border: none;
   border-bottom: 0.15rem solid rgba(85, 90, 100, 0.25);

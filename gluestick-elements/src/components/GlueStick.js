@@ -20,7 +20,7 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
   const childRef = useRef();
 
   const [stage, setStage] = React.useState(state);
-  const [mappingData, setMappingData] = React.useState();
+  const [mappingData, setMappingData] = React.useState({});
   const [finalData, setFinalData] = React.useState();
   const [filename, setFileName] = React.useState();
 
