@@ -1,3 +1,4 @@
+import os
 import logging
 import re
 import json
@@ -6,12 +7,23 @@ import functools
 from flask import Flask, request, make_response, jsonify
 from requests_toolbelt import MultipartDecoder
 
-from lib import manager, util
+from lib import manager, util, usage
 
 logger = logging.getLogger("gluestick-api")
 logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
 app = Flask(__name__)
+
+@app.before_first_request
+def init():
+    # Check if usage stats are enabled
+    usage_stats = os.environ.get("GLUESTICK_USAGE_STATS", "ENABLE") == "ENABLE"
+
+    if usage_stats:
+        logger.info("""
+        Anonymous usage tracking statistics are enabled.
+        If you'd like to disable this, please refer to the gluestick docs https://docs.gluestick.xyz
+        """)
 
 #############
 # CORS      #
@@ -71,9 +83,11 @@ def _get_parts():
 
     return files
 
+
 @app.route('/status', methods=['GET', 'OPTIONS'])
 @cors
 def status():
+    usage.track("Status")
     return corsify({'code': 'success'})
 
 
@@ -84,6 +98,7 @@ def do_mapping(user):
     filename = body.get("filename")
     mapping = body.get("mapping")
     schema = body.get("schema")
+    usage.track("Mapping")
 
     if mapping is None:
         return corsify({'code': 'error', 'message': 'No mapping Provided'}), 400
@@ -108,6 +123,7 @@ def validate_mapping(user):
     filename = body.get("filename")
     mapping = body.get("mapping")
     schema = body.get("schema")
+    usage.track("Validate")
 
     if mapping is None:
         return corsify({'code': 'error', 'message': 'No mapping Provided'}), 400
@@ -128,6 +144,7 @@ def validate_mapping(user):
 def upload_file(user):
     logger.debug(f"[upload_file]: parsing payload")
     files = _get_parts()
+    usage.track("Upload")
 
     if files is None or len(files) == 0:
         return {'code': 'error', 'message': 'No Schema Provided'}, 400

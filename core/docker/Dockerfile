@@ -8,20 +8,23 @@ RUN yum update -y
 # Download deps
 RUN yum install -y python3.x86_64 gcc python3-devel
 
+# Copy dist
+COPY dist ./dist
+WORKDIR /home/dist
+
+# Install requirements
+RUN pip3 install gunicorn
+
 # Setup virtual envs
-COPY envs ./envs
-WORKDIR /home/envs
+WORKDIR /home/dist/envs
 RUN chmod +x ./install.sh
 RUN ./install.sh
 
-WORKDIR /home
-
 # Setup API
-COPY dist ./dist
-WORKDIR /home/dist
-RUN pip3 install gluestick_api-0.0.1-py3-none-any.whl waitress
+WORKDIR /home
+COPY api ./api
+WORKDIR /home/api
 RUN pip3 install -r requirements.txt
 
 # Start the API
-WORKDIR /home
-ENTRYPOINT waitress-serve --call 'gluestick_api:create_app'
+ENTRYPOINT gunicorn --bind 0.0.0.0:5000 app:app
