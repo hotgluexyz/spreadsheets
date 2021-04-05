@@ -25,6 +25,16 @@ def init():
         If you'd like to disable this, please refer to the gluestick docs https://docs.gluestick.xyz
         """)
 
+    # Check if webhook is enabled
+    webhook_url = os.environ.get("GLUESTICK_WEBHOOK_URL")
+
+    if webhook_url is not None:
+        logger.info(f"""
+        You have enabled webhook updates to {webhook_url}.
+        If you'd like to disable this, please refer to the gluestick docs https://docs.gluestick.xyz
+        """)
+
+
 #############
 # CORS      #
 #############

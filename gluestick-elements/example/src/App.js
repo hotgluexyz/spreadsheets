@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { GlueStick } from 'elements'
-import 'elements/dist/index.css'
+import { GlueStick } from 'gluestick-elements'
+import 'gluestick-elements/dist/index.css'
 
 const App = () => {
   return (

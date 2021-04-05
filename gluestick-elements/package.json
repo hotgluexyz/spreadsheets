@@ -1,7 +1,7 @@
 {
-  "name": "elements",
+  "name": "gluestick-elements",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "Open source and self-hosted CSV mapping.",
   "author": "hotgluexyz",
   "license": "MIT",
   "repository": "hotgluexyz/gluestick",
