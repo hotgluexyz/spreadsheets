@@ -1,4 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
+import stringSimilarity from 'string-similarity'
+
 import { doMapping, validateMapping } from '../api/client'
 import classes from './mapper.styles.module.css'
 
@@ -18,6 +20,21 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
     const [loading, setLoading] = React.useState(false);
     const [mapping, setMapping] = React.useState({});
     const [invalid, setInvalid] = React.useState({});
+
+    const requiredCols = schema && schema.fields && schema.fields.map(f => f.col);
+    const availableCols = data && Object.keys(data);
+
+    React.useEffect(() => {
+      if (!requiredCols || !availableCols || Object.keys(mapping).length !== 0) return;
+
+      // Set default values for mapping
+      for (const requiredCol of requiredCols) {
+        const {bestMatch} = stringSimilarity.findBestMatch(requiredCol, availableCols);
+        const selectedCol = bestMatch && bestMatch.target;
+        if (selectedCol)
+          updateMapping(requiredCol, selectedCol);
+      }
+    }, [requiredCols, availableCols]);
 
     useImperativeHandle(ref, () => ({
       async handleMapping() {
@@ -39,9 +56,6 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
         }
       }
     }));
-
-    const requiredCols = schema && schema.fields && schema.fields.map(f => f.col);
-    const availableCols = data && Object.keys(data);
 
     const updateMapping = (requiredCol, selectedCol) => {
         mapping[requiredCol] = selectedCol;

@@ -50,5 +50,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "string-similarity": "^4.0.4"
+  }
 }
