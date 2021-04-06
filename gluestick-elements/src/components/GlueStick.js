@@ -59,12 +59,15 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
       break
   }
 
+  // Used to get higher specificity over global css.
+  const buttonStyle = { color: '#ffffff' }
+
   return (
     <div className={classes.root}>
       <div className={classes.paper}>
         {component}
         <div className={classes.footer}>
-          { (stage == 'mapping' || stage == 'preview') ? <a className={classes.btnBack} onClick={onBack || onBackDefault}><ArrowBackIcon/>Back</a> : null }
+          { (stage == 'mapping' || stage == 'preview') ? <a style={buttonStyle} className={classes.btnBack} onClick={onBack || onBackDefault}><ArrowBackIcon/>Back</a> : null }
           <div className={classes.breadcrumbs}>
             <span className={ stage == 'upload' ? classes.activeStage : classes.inactiveStage }>Upload</span>
             <span className={classes.breadcrumbSpacer}></span>
@@ -72,8 +75,8 @@ const GlueStick = ({ user, endpoint, state = 'upload', onBack, onUpload, onDone,
             <span className={classes.breadcrumbSpacer}></span>
             <span className={ stage == 'preview' ? classes.activeStage : classes.inactiveStage }>Preview</span>
           </div>
-          { stage == 'mapping' && <a className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<ArrowForwardIcon/></a> }
-          { stage == 'preview' && <a className={classes.btnForward} href='#'>Import<CheckIcon/></a> }
+          { stage == 'mapping' && <a style={buttonStyle} className={classes.btnForward} onClick={() => childRef.current.handleMapping()}>Continue<ArrowForwardIcon/></a> }
+          { stage == 'preview' && <a style={buttonStyle} className={classes.btnForward} href='#'>Import<CheckIcon/></a> }
         </div>
       </div>
     </div>
