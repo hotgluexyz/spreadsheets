@@ -1,0 +1,9 @@
+# Misc.
+.DS_Store
+
+# Testing
+tests/
+
+# Build
+dist/
+gluestick.egg-info/
