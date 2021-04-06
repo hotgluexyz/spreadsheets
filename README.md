@@ -2,8 +2,9 @@
 <p>
   <a href="https://1c1dl.csb.app"><img src="https://img.shields.io/badge/demo-View%20demo-red" alt="demo"></a>
   <a href="https://docs.gluestick.xyz"><img src="https://img.shields.io/badge/docs-Read%20docs-blueviolet" alt="docs"></a>
-  <a href="https://bit.ly/2KBGGq1"><img src="https://img.shields.io/badge/Slack-Join%20Slack-blue" alt="join slack"></a>
+  <a href="https://bit.ly/2KBGGq1"><img src="https://img.shields.io/badge/slack-Join%20Slack-blue" alt="join slack"></a>
   <a href="https://www.npmjs.com/package/gluestick-elements"><img src="https://img.shields.io/npm/v/gluestick-elements.svg" alt="npm package"></a>
+  <a href="https://hub.docker.com/r/hotglue/gluestick-api"><img src="https://img.shields.io/badge/dockerhub-Image-9cf" alt="dockerhub"/></a>
 </p>
 
 An open source and self-hosted file CSV import button for your web app.

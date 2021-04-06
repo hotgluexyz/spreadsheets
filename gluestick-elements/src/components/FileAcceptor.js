@@ -20,7 +20,7 @@ const FileAcceptor = ({user, endpoint, onUpload}) => {
   return (
     <React.Fragment>
       <h3 className={classes.h3}>Upload your data</h3>
-      <p className={classes.p}>To begin the data import, please upload a CSV or XML file.</p>
+      <p className={classes.p}>To begin the data import, please upload a CSV file.</p>
       <div className={classes.uploadArea}>
         <UploadFileIcon className={classes.icon} />
         <h3 className={classes.text}>Drag & Drop a File</h3>
