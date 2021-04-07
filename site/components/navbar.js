@@ -2,6 +2,27 @@ import Link from "next/link";
 
 const Navbar = (props) => {
   return (
+    <>
+    <div className="navbar-container bg-dark">
+      <div className="navbar">
+      <div className="container">
+        <a href="https://hotglue.xyz">
+          <img
+            alt="hotglue"
+            src={require("../assets/img/hotglue.svg")}
+            style={{height: "30px"}}
+          />
+        </a>
+        <div className="d-flex align-items-center order-lg-3">
+            <a
+              href="https://hotglue.xyz"
+            >
+              Build embedded, native SaaS integrations in minutes <i className="arrow right"></i>
+            </a>
+          </div>
+      </div>
+      </div>
+    </div>
     <div className="navbar-container bg-light">
       <nav className="navbar navbar-expand-lg navbar-light" data-sticky="top">
         <div className="container">
@@ -41,6 +62,7 @@ const Navbar = (props) => {
         </div>
       </nav>
     </div>
+    </>
   );
 };
 

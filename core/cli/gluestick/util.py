@@ -1,33 +1,29 @@
 import json
 import os
+import re
 
-CONFIG_NAME = "gluestick.json"
+CONFIG_NAME = "gluestick.config"
+DEFAULT_CONFIG = """
+GLUESTICK_OUTPUT_FORMAT=csv
+"""
 
 def config_exists():
     return os.path.isfile(CONFIG_NAME)
 
 
 def create_default_config():
-    write_json_file(CONFIG_NAME, {})
+    write_file(CONFIG_NAME, DEFAULT_CONFIG)
 
 
-def update_config(type, content):
-    config = read_json_file(CONFIG_NAME)
-    config[type] = content
-    write_json_file(CONFIG_NAME, config)
+def update_config(content):
+    # Remove whitespace
+    content = re.sub(r'[^\S\r\n]+', '', content)
+    write_file(CONFIG_NAME, content)
 
 
-def read_json_file(filename):
-    # read file
-    with open(f"{filename}", 'r') as filetoread:
-        data = filetoread.read()
-
-    # parse file
-    content = json.loads(data)
-
-    return content
-
-
-def write_json_file(filename, content):
-    with open(filename, 'w') as f:
-        json.dump(content, f, indent=4)
+def write_file(filename, data):
+    fh = open(filename, "w")
+    try:
+        fh.write(data)
+    finally:
+        fh.close()

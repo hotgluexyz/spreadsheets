@@ -80,7 +80,7 @@
   opacity: 0.75;
 }
 
-.footer a img {
+.footer a svg {
   height: 1.25rem;
   width: auto;
 }
@@ -96,7 +96,6 @@
 
 .btnBack svg {
   margin-right: 1rem;
-  width: 1.5rem;
 }
 
 .btnForward {
@@ -110,7 +109,6 @@
 
 .btnForward svg {
   margin-left: 1rem;
-  width: 1.5rem;
 }
 
 .activeStage {

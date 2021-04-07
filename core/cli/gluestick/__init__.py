@@ -29,23 +29,28 @@ def config():
     """
     # Verify that gluestick.json exists
     if not util.config_exists():
-        raise click.UsageError(click.style('Oops! No gluestick.json file is present. Have you ran gluestick install in this directory?', fg='red'))
+        raise click.UsageError(click.style('Oops! No gluestick.config file is present. Have you ran gluestick install in this directory?', fg='red'))
 
     pass
 
 
 def target_args(ctx, param, target_name):
+    # TODO: Add support for google cloud storage
+
     if target_name == "s3":
+        # Handle prompts for S3 data
         bucket = click.prompt("What S3 bucket do you want to use?")
+        path_prefix = click.prompt("What path prefix do you want files to be uploaded under?", default="uploads/{user}")
         aws_access_key_id = click.prompt("What is your AWS Access Key Id?")
         aws_secret_access_key = click.prompt("What is your AWS Secret Access Key?", hide_input=True, confirmation_prompt=True)
 
-        return (target_name, bucket, aws_access_key_id, aws_secret_access_key)
+        return (target_name, bucket, path_prefix, aws_access_key_id, aws_secret_access_key)
 
 
 @config.command()
-@click.option("--dest", prompt="Where do you want final data to go?", type=click.Choice(['s3', 'Cloud Storage'], case_sensitive=False), callback=target_args)
-def target(dest):
+@click.option("--format", prompt="What format do you want final data in?", type=click.Choice(['json', 'csv'], case_sensitive=False))
+@click.option("--dest", prompt="Where do you want final data to go?", type=click.Choice(['s3'], case_sensitive=False), callback=target_args)
+def target(format, dest):
     """
     Configure the target destination for final data
     """
@@ -53,12 +58,15 @@ def target(dest):
     click.echo("Using target {}".format(target_name))
 
     if target_name == "s3":
-        target_config = {
-            "target": "s3",
-            "bucket": dest[1],
-            "aws_access_key_id": dest[2],
-            "aws_secret_access_key": dest[3]
-        }
+        target_config = f"""
+        GLUESTICK_OUTPUT_FORMAT={format}
+        GLUESTICK_TARGET=s3
+        GLUESTICK_TARGET_BUCKET={dest[1]}
+        GLUESTICK_TARGET_PATH_PREFIX={dest[2]}
+        GLUESTICK_TARGET_AWS_ACCESS_KEY_ID={dest[3]}
+        GLUESTICK_TARGET_AWS_SECRET_ACCESS_KEY={dest[4]}
+        """
 
-        util.update_config("target", target_config)
+        # Update the gluestick config
+        util.update_config(target_config)
         click.echo(click.style('Configuration saved', fg='green'))

@@ -7,7 +7,7 @@
   <a href="https://hub.docker.com/r/hotglue/gluestick-api"><img src="https://img.shields.io/badge/dockerhub-Image-9cf" alt="dockerhub"/></a>
 </p>
 
-An open source and self-hosted file CSV import button for your web app.
+Open source, self-hosted CSV uploads and mapping.
 
 ---
 

@@ -7,7 +7,7 @@
   <a href="https://hub.docker.com/r/hotglue/gluestick-api"><img src="https://img.shields.io/badge/dockerhub-Image-9cf" alt="dockerhub"/></a>
 </p>
 
-An open source and self-hosted CSV import button for your web app.
+Open source, self-hosted CSV uploads and mapping.
 
 ---
 
@@ -36,7 +36,7 @@ Designed to make it easy to get up and running very quickly.
 
 ### Functionality
 1. Install gluestick-api (pull from Docker Hub, create initial config)
-2. Configure gluestick-api – generates `gluestick.json` which is converted to a `gluestick-env.list` and passed to the Docker container
+2. Configure gluestick-api – generates `gluestick.config` which can be passed to the Docker container
 3. Deploy to the cloud (Heroku, AWS, Azure, GCP, etc.)
 
 ### Install

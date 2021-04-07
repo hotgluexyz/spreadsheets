@@ -101,6 +101,19 @@ def status():
     return corsify({'code': 'success'})
 
 
+@app.route('/file/<user>/import', methods=['POST', 'OPTIONS'])
+@cors
+def do_import(user):
+    body = request.json
+    filename = body.get("filename")
+    usage.track("Import")
+
+    # Do the import
+    manager.do_import(user, filename)
+
+    return corsify({'code': 'sucess'})
+
+
 @app.route('/file/<user>/map', methods=['POST', 'OPTIONS'])
 @cors
 def do_mapping(user):
@@ -120,8 +133,6 @@ def do_mapping(user):
 
     # Trigger webhook
     util.trigger_hook(user, util.Lifecycle.MAPPING_COMPLETED)
-
-    # TODO: Upload to target, if any
 
     return corsify({'code': 'success', 'data': data})
 

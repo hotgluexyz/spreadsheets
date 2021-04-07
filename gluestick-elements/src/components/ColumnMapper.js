@@ -17,9 +17,9 @@ const invert = (obj) => {
 }
 
 const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone}, ref) => {
-    const [loading, setLoading] = React.useState(false);
     const [mapping, setMapping] = React.useState({});
     const [invalid, setInvalid] = React.useState({});
+    const [error, setError] = React.useState(undefined);
 
     const requiredCols = schema && schema.fields && schema.fields.map(f => f.col);
     const availableCols = data && Object.keys(data);
@@ -39,21 +39,12 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
     useImperativeHandle(ref, () => ({
       async handleMapping() {
         if (Object.keys(mapping).length < requiredCols.length) {
-            alert("Oops! You didn't select a matching column for all the required columns.")
+            setError("Oops! You didn't select a matching column for all the required columns.")
             return;
         }
-
-        setLoading(true);
-
-        try {
-            const {data} = await doMapping(endpoint, user, filename, invert(mapping), schema);
-            onDone && onDone(data);
-        } catch (err) {
-            console.error(err);
-            alert(`Something went wrong: ${err}: ${err.stack}`);
-        } finally {
-            setLoading(false);
-        }
+        
+        const {data} = await doMapping(endpoint, user, filename, invert(mapping), schema);
+        onDone && onDone(data);
       }
     }));
 
@@ -67,17 +58,9 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
         if (Object.keys(mapping).length < requiredCols.length) {
             return;
         }
-        setLoading(true);
 
-        try {
-            const {data} = await validateMapping(endpoint, user, filename, invert(mapping), schema);
-            setInvalid(data);
-        } catch (err) {
-            console.error(err);
-            alert(`Something went wrong: ${err}: ${err.stack}`);
-        } finally {
-            setLoading(false);
-        }
+        const {data} = await validateMapping(endpoint, user, filename, invert(mapping), schema);
+        setInvalid(data);
     }
 
     const HeaderRow = ({importHeader, value}) => {
@@ -164,6 +147,7 @@ const ColumnMapper = forwardRef(({user, endpoint, schema, data, filename, onDone
       <React.Fragment>
         <h3 className={classes.h3}>Map Data Columns</h3>
         <p className={classes.p}>To ensure that data is imported correctly, please map the columns below.</p>
+        {error && <p style={{color: "#fa5240"}}>{error}</p>}
         <div>
           {columnMapRows}
         </div>
