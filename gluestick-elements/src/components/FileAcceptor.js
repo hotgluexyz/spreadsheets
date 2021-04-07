@@ -35,7 +35,7 @@ const FileAcceptor = ({user, endpoint, onUpload}) => {
         <span className={classes.subtext}>OR SELECT A FILE</span>
         <input
           id='data-file'
-          accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+          accept='.csv'
           type='file'
           className={classes.fileInput}
           onChange={onUploadInternal}
