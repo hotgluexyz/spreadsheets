@@ -70,3 +70,20 @@ def target(format, dest):
         # Update the gluestick config
         util.update_config(target_config)
         click.echo(click.style('Configuration saved', fg='green'))
+
+
+@config.command()
+@click.option("--url", prompt="What endpoint is your listener on?")
+@click.option("--secret")
+def webhook(url, secret):
+    """
+    Configure a webhook endpoint to receive updates on user imports
+    """
+    config = f"GLUESTICK_WEBHOOK_URL={url}"
+
+    if secret is not None:
+        config += f"\nGLUESTICK_WEBHOOK_SECRET={secret}"
+
+    # Update the gluestick config
+    util.update_config(config)
+    click.echo(click.style('Configuration saved', fg='green'))

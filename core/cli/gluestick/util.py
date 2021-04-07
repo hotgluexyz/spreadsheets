@@ -18,6 +18,7 @@ def create_default_config():
 def update_config(content):
     # Remove whitespace
     content = re.sub(r'[^\S\r\n]+', '', content)
+    # TODO: Avoid overwriting old config
     write_file(CONFIG_NAME, content)
 
 
