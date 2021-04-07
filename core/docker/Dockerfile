@@ -6,17 +6,11 @@ WORKDIR /home
 RUN yum update -y
 
 # Download deps
-RUN yum install -y python3.x86_64 gcc python3-devel
-
-# Copy dist
-COPY dist ./dist
-WORKDIR /home/dist
-
-# Install requirements
-RUN pip3 install gunicorn
+RUN yum install -y git python3.x86_64 gcc python3-devel
 
 # Setup virtual envs
-WORKDIR /home/dist/envs
+COPY envs ./envs
+WORKDIR /home/envs
 RUN chmod +x ./install.sh
 RUN ./install.sh
 
@@ -24,6 +18,9 @@ RUN ./install.sh
 WORKDIR /home
 COPY api ./api
 WORKDIR /home/api
+
+# Install requirements
+RUN pip3 install gunicorn
 RUN pip3 install -r requirements.txt
 
 # Start the API

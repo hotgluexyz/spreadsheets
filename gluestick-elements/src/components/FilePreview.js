@@ -43,7 +43,7 @@ const FilePreview = ({data}) => {
   return (
     <React.Fragment>
       <h3 className={classes.h3}>Preview your final data</h3>
-      <p className={classes.p}>Make sure that the example data shown below matches your expectations and then confirm the data import.</p>
+      <p className={classes.p}>Make sure that the data shown below matches your expectations and then confirm the data import.</p>
       <PreviewTable data={data} />
     </React.Fragment>
   )

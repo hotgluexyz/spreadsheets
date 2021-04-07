@@ -44,7 +44,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-5">
+            <div className="col-lg-5 col-md-12 d-phone-none">
               <div className="row justify-content-center" data-jarallax-element="-50">
                   <GlueStick
                     user={"default"}
@@ -255,7 +255,7 @@ export default function Home() {
                 <div className="d-flex flex-wrap justify-content-center justify-content-lg-start">
                   <div
                     className="my-4"
-                    data-aos="fade-left"
+                    data-aos="fade-in"
                     data-aos-delay="100"
                   >
                     <div className="d-flex">
@@ -284,7 +284,7 @@ export default function Home() {
                   </div>
                   <div
                     className="my-4"
-                    data-aos="fade-left"
+                    data-aos="fade-in"
                     data-aos-delay="200"
                   >
                     <div className="d-flex">

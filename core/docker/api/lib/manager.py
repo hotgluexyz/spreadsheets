@@ -1,9 +1,15 @@
-import os
 import json
-import pandas as pd
+import logging
+import os
 import shutil
+import subprocess
+import sys
 
-from lib import util
+import pandas as pd
+
+from lib import util, exec
+
+logger = logging.getLogger("gluestick-api")
 
 def establish_dirs():
     """
@@ -52,6 +58,60 @@ def validate_mapping(user, filename, mapping, schema):
             }
 
     return invalid
+
+
+def do_import(user, filename):
+    """
+    Send output data to configure target, if any
+    """
+    target = os.environ.get("GLUESTICK_TARGET")
+
+    # Check if a target has been configured
+    if target is None:
+        return
+
+    data_dir = establish_dirs()
+    user_dir = f"{data_dir}/{user}"
+    file_path = f"{user_dir}/{filename}".replace(".csv", "-mod.csv")
+
+    # Prepare output dir
+    output_dir = f"{user_dir}/output"
+    util.del_exists(output_dir)
+    os.makedirs(output_dir)
+
+    # Write the output
+    output_format = os.environ.get("GLUESTICK_OUTPUT_FORMAT", "csv")
+
+    if output_format == "csv":
+        # Just copy the file over
+        shutil.copyfile(file_path, f"{output_dir}/{filename}")
+
+    # TODO: Handle JSON format
+
+    
+    # Build the target config.json
+    config_keys = [x for x in os.environ.keys() if x.startswith("GLUESTICK_TARGET_")]
+    target_config = {
+        'input_path': output_dir
+    }
+
+    for key in config_keys:
+        # Convert the environment key into config key format (GLUESTICK_TARGET_BUCKET -> bucket)
+        config_key = key[17:].lower()
+        target_config[config_key] = os.environ[key].format(user=user)
+
+    # Write the target config
+    util.write_json_file(f"{user_dir}/config.json", target_config)
+
+    # Run the target
+    try:
+        cmd = f"source /home/envs/{target}/bin/activate && target-{target} --config config.json"
+        logger.info(f"Running Subprocess: [ {cmd} ] with path [ {sys.path} ]")
+
+        exec.exec_process(cmd, user_dir)
+    except subprocess.SubprocessError as spe:
+        logger.error(f"Subprocess Failed: {spe}")
+        raise spe
 
 
 def do_mapping(user, filename, mapping, schema):

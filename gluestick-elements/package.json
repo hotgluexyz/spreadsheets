@@ -1,6 +1,6 @@
 {
   "name": "gluestick-elements",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Open source and self-hosted CSV mapping.",
   "author": "hotgluexyz",
   "license": "MIT",
@@ -50,5 +50,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "string-similarity": "^4.0.4"
+  }
 }

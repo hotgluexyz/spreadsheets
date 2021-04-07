@@ -13,6 +13,10 @@ export function doMapping(endpoint, user, filename, mapping, schema) {
     return Request.POST(`file/${user}/map`, {body: JSON.stringify({filename, mapping, schema})}, endpoint);
 }
 
+export function doImport(endpoint, user, filename) {
+    return Request.POST(`file/${user}/import`, {body: JSON.stringify({filename})}, endpoint);
+}
+
 export function validateMapping(endpoint, user, filename, mapping, schema) {
     return Request.POST(`file/${user}/validate`, {body: JSON.stringify({filename, mapping, schema})}, endpoint);
 }

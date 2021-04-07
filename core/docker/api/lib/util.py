@@ -1,6 +1,7 @@
 import os
 import json
 import enum
+import shutil
 
 
 class Lifecycle(enum.Enum):
@@ -89,3 +90,8 @@ def get_key(d, val):
              return key
  
     return None
+
+
+def del_exists(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
