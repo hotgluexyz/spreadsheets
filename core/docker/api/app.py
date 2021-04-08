@@ -111,6 +111,9 @@ def do_import(user):
     # Do the import
     manager.do_import(user, filename)
 
+    # Trigger webhook
+    util.trigger_hook(user, util.Lifecycle.DATA_EXPORTED)
+
     return corsify({'code': 'sucess'})
 
 

@@ -11,7 +11,7 @@ Open source, self-hosted CSV uploads and mapping.
 
 ---
 
-[![demo](./assets/FileAcceptor.png)](https://1c1dl.csb.app)
+[![demo](./assets/gluestick.gif)](https://1c1dl.csb.app)
 
 ## Info
 
@@ -77,7 +77,13 @@ class Example extends Component {
 }
 ```
 
-## Backend
+## gluestick-api
 
-The real magic is a Python + Docker based mapping API that leverages data science tools to manipulate CSVs. 
+A Python + Docker based mapping API that leverages data science tools to manipulate CSVs. This part is designed to be self-hosted and also benefits from being completely open source.
 
+### Features
+
+1. Handle all gluestick elements requests (all data is processed via Python backend not in browser)
+2. Deployable to the cloud (Heroku, AWS, etc.)
+3. Ability to connect with and pipe data directly to all targets supported by hotglue (S3, Cloud Storage, etc.)
+4. Webhook functionality to programmatically monitor user uploads and make actions based on that

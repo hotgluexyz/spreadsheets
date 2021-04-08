@@ -1,5 +1,6 @@
 import click
 import json
+import subprocess
 
 from . import util
 
@@ -18,8 +19,29 @@ def install():
     """
     Create the gluestick.json configuration in this directory
     """
+    # Create the default config
     util.create_default_config()
-    click.echo(click.style('The default gluestick API configuration has been created.', fg='green'))
+    click.echo(click.style('Created default gluestick-api configuration.', fg='green'))
+
+    # Pull the Docker container
+    click.echo('Pulling the gluestick-api Docker image...')
+    subprocess.run("docker pull hotglue/gluestick-api", shell=True, check=True)
+    click.echo(click.style('Latest gluestick-api Docker image pulled.', fg='green'))
+
+
+@main.command()
+@click.option("--port", default=5000, type=int)
+def run(port):
+    """
+    Run the gluestick-api on the local machine
+    """
+    # Verify that gluestick config exists
+    util.config_exists()
+
+    click.echo(click.style('Starting gluestick-api...', fg='green'))
+
+    # Start the Docker container
+    subprocess.run(f"docker run --env-file gluestick.config -e PORT={port} -p {port}:{port} -it hotglue/gluestick-api", shell=True, check=True)
 
 
 @main.group()
@@ -27,10 +49,8 @@ def config():
     """
     Configure the gluestick-api
     """
-    # Verify that gluestick.json exists
-    if not util.config_exists():
-        raise click.UsageError(click.style('Oops! No gluestick.config file is present. Have you ran gluestick install in this directory?', fg='red'))
-
+    # Verify that gluestick config exists
+    util.config_exists()
     pass
 
 
@@ -58,15 +78,34 @@ def target(format, dest):
     click.echo("Using target {}".format(target_name))
 
     if target_name == "s3":
-        target_config = f"""
-        GLUESTICK_OUTPUT_FORMAT={format}
-        GLUESTICK_TARGET=s3
-        GLUESTICK_TARGET_BUCKET={dest[1]}
-        GLUESTICK_TARGET_PATH_PREFIX={dest[2]}
-        GLUESTICK_TARGET_AWS_ACCESS_KEY_ID={dest[3]}
-        GLUESTICK_TARGET_AWS_SECRET_ACCESS_KEY={dest[4]}
-        """
+        target_config = {
+            'GLUESTICK_TARGET': 's3',
+            'GLUESTICK_TARGET_FORMAT': format,
+            'GLUESTICK_TARGET_BUCKET': dest[1],
+            'GLUESTICK_TARGET_PATH_PREFIX': dest[2],
+            'GLUESTICK_TARGET_AWS_ACCESS_KEY_ID': dest[3],
+            'GLUESTICK_TARGET_AWS_SECRET_ACCESS_KEY': dest[4]
+        }
 
         # Update the gluestick config
-        util.update_config(target_config)
+        util.update_config('target', target_config)
         click.echo(click.style('Configuration saved', fg='green'))
+
+
+@config.command()
+@click.option("--url", prompt="What endpoint is your listener on?")
+@click.option("--secret")
+def webhook(url, secret):
+    """
+    Configure a webhook endpoint to receive updates on user imports
+    """
+    config = {
+        'GLUESTICK_WEBHOOK_URL': url
+    }
+
+    if secret is not None:
+        config['GLUESTICK_WEBHOOK_SECRET']= secret
+
+    # Update the gluestick config
+    util.update_config('webhook', config)
+    click.echo(click.style('Configuration saved', fg='green'))

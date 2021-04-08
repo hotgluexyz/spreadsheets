@@ -80,15 +80,16 @@ def do_import(user, filename):
     os.makedirs(output_dir)
 
     # Write the output
-    output_format = os.environ.get("GLUESTICK_OUTPUT_FORMAT", "csv")
+    output_format = os.environ.get("GLUESTICK_TARGET_FORMAT", "csv")
 
     if output_format == "csv":
         # Just copy the file over
         shutil.copyfile(file_path, f"{output_dir}/{filename}")
+    elif output_format == "json":
+        df = pd.read_csv(file_path)
+        data = df.to_dict('records')
+        util.write_json_file(f"{output_dir}/{filename.replace('.csv', '.json')}", data)
 
-    # TODO: Handle JSON format
-
-    
     # Build the target config.json
     config_keys = [x for x in os.environ.keys() if x.startswith("GLUESTICK_TARGET_")]
     target_config = {
