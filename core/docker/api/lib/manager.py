@@ -45,8 +45,10 @@ def validate_mapping(user, filename, mapping, schema):
             invalid_data = df_col.loc[~valid]
             invalid_rows = []
 
-            # Serialize invalid rows
+            # Serialize first 5 invalid rows
             for index, value in invalid_data.items():
+                if len(invalid_rows) > 5:
+                    break
                 if pd.isna(value):
                     value = ''
                 invalid_rows.append(value)
