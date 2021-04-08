@@ -43,6 +43,10 @@ function App({ Component, pageProps }) {
             <script type="text/javascript" src="/js/aos.js"/>
             <script type="text/javascript" src="/js/jquery.min.js"></script>
             <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+            {/* Google Analytics */}
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-095DCNKJGQ"></script>
+            <script type="text/javascript" src="/js/gtag.js"/>
             </>
         </Head>
         <Component {...pageProps}/>

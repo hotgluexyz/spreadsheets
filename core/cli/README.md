@@ -11,7 +11,7 @@ Open source, self-hosted CSV uploads and mapping.
 
 ---
 
-[![demo](https://cdn.statically.io/gh/hotgluexyz/gluestick/master/assets/gluestcik.gif)](https://1c1dl.csb.app)
+[![demo](https://cdn.statically.io/gh/hotgluexyz/gluestick/master/assets/gluestick.gif)](https://1c1dl.csb.app)
 
 ## Info
 
