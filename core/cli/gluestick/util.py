@@ -1,3 +1,4 @@
+import click
 import json
 import os
 import re
@@ -8,7 +9,8 @@ GLUESTICK_OUTPUT_FORMAT=csv
 """
 
 def config_exists():
-    return os.path.isfile(CONFIG_NAME)
+    if not os.path.isfile(CONFIG_NAME):
+        raise click.UsageError(click.style('Oops! No gluestick.config file is present. Have you ran gluestick install in this directory?', fg='red'))
 
 
 def create_default_config():
