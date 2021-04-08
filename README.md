@@ -11,7 +11,7 @@ Open source, self-hosted CSV uploads and mapping.
 
 ---
 
-[![demo](./assets/FileAcceptor.png)](https://1c1dl.csb.app)
+[![demo](./assets/gluestick.gif)](https://1c1dl.csb.app)
 
 ## Info
 

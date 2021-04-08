@@ -1,4 +1,4 @@
-# ![gluestick logo](./assets/gs-icon.svg) gluestick by hotglue
+# ![gluestick logo](https://cdn.statically.io/gh/hotgluexyz/gluestick/master/assets/gs-icon.svg) gluestick by hotglue
 <p>
   <a href="https://1c1dl.csb.app"><img src="https://img.shields.io/badge/demo-View%20demo-red" alt="demo"></a>
   <a href="https://docs.gluestick.xyz"><img src="https://img.shields.io/badge/docs-Read%20docs-blueviolet" alt="docs"></a>
@@ -11,7 +11,7 @@ Open source, self-hosted CSV uploads and mapping.
 
 ---
 
-[![demo](./assets/FileAcceptor.png)](https://1c1dl.csb.app)
+[![demo](https://cdn.statically.io/gh/hotgluexyz/gluestick/master/assets/gluestick.gif)](https://1c1dl.csb.app)
 
 ## Info
 
