@@ -80,7 +80,7 @@ def do_import(user, filename):
     os.makedirs(output_dir)
 
     # Write the output
-    output_format = os.environ.get("GLUESTICK_OUTPUT_FORMAT", "csv")
+    output_format = os.environ.get("GLUESTICK_TARGET_FORMAT", "csv")
 
     if output_format == "csv":
         # Just copy the file over

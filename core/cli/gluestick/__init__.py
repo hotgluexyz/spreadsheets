@@ -78,17 +78,17 @@ def target(format, dest):
     click.echo("Using target {}".format(target_name))
 
     if target_name == "s3":
-        target_config = f"""
-        GLUESTICK_OUTPUT_FORMAT={format}
-        GLUESTICK_TARGET=s3
-        GLUESTICK_TARGET_BUCKET={dest[1]}
-        GLUESTICK_TARGET_PATH_PREFIX={dest[2]}
-        GLUESTICK_TARGET_AWS_ACCESS_KEY_ID={dest[3]}
-        GLUESTICK_TARGET_AWS_SECRET_ACCESS_KEY={dest[4]}
-        """
+        target_config = {
+            'GLUESTICK_TARGET': 's3',
+            'GLUESTICK_TARGET_FORMAT': format,
+            'GLUESTICK_TARGET_BUCKET': dest[1],
+            'GLUESTICK_TARGET_PATH_PREFIX': dest[2],
+            'GLUESTICK_TARGET_AWS_ACCESS_KEY_ID': dest[3],
+            'GLUESTICK_TARGET_AWS_SECRET_ACCESS_KEY': dest[4]
+        }
 
         # Update the gluestick config
-        util.update_config(target_config)
+        util.update_config('target', target_config)
         click.echo(click.style('Configuration saved', fg='green'))
 
 
@@ -99,11 +99,13 @@ def webhook(url, secret):
     """
     Configure a webhook endpoint to receive updates on user imports
     """
-    config = f"GLUESTICK_WEBHOOK_URL={url}"
+    config = {
+        'GLUESTICK_WEBHOOK_URL': url
+    }
 
     if secret is not None:
-        config += f"\nGLUESTICK_WEBHOOK_SECRET={secret}"
+        config['GLUESTICK_WEBHOOK_SECRET']= secret
 
     # Update the gluestick config
-    util.update_config(config)
+    util.update_config('webhook', config)
     click.echo(click.style('Configuration saved', fg='green'))
