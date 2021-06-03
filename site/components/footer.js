@@ -20,8 +20,8 @@ function Footer(props) {
           <div className="col-auto mt-3 mt-lg-0">
             <ul className="list-unstyled d-flex mb-0">
               <li className="mx-3">
-                <a href="https://bit.ly/2KBGGq1" className="hover-fade-out">
-                    <ReactSVG src={require("../assets/img/logos/slack.svg")} alt="Slack icon" beforeInjection={svg => {
+                <a href="https://discord.gg/2pwz7JBDCh" className="hover-fade-out">
+                    <ReactSVG src={require("../assets/img/logos/discord.svg")} alt="Slack icon" beforeInjection={svg => {
                         svg.classList.add('injected-svg')
                         svg.classList.add('icon')
                         svg.classList.add('icon-xs')

@@ -17,7 +17,7 @@ const Navbar = (props) => {
             <a
               href="https://hotglue.xyz"
             >
-              Build embedded, native SaaS integrations in minutes <i className="arrow right"></i>
+              Build embedded, native SaaS integrations in minutes →
             </a>
           </div>
       </div>
@@ -37,7 +37,7 @@ const Navbar = (props) => {
           </Link>
           <div className="d-flex align-items-center order-lg-3">
             <a
-              href="https://github.com/hotgluexyz/gluestick"
+              href="https://github.com/gluestickxyz"
               className="btn btn-primary ml-lg-4 mr-3 mr-md-4 mr-lg-0 d-none d-sm-block order-lg-3"
             >
               View on GitHub

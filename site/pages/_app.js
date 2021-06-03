@@ -16,25 +16,25 @@ function App({ Component, pageProps }) {
   return <div>
         <Head>
             <>
-            <title>gluestick by hotglue</title>
+            <title>gluestick – SaaS targets</title>
 
             <link rel="icon" href="/favicon.ico" />
 
             {/* Meta */}
             <meta property="og:locale" content="en-US"/>
-            <meta name="title" content="gluestick by hotglue"/>
-            <meta name="description" content="Open source, self-hosted CSV uploads and mapping."/>
+            <meta name="title" content="gluestick – SaaS targets"/>
+            <meta name="description" content="Simple, reusable, open-source SaaS targets"/>
 
             <meta property="og:type" content="website"/>
             <meta property="og:url" content="https://gluestick.xyz"/>
-            <meta property="og:site_name" content="gluestick by hotglue"/>
+            <meta property="og:site_name" content="gluestick – SaaS targets"/>
             <meta property="og:image" content="https://gluestick.xyz/gluestick.png"/>
-            <meta property="og:description" content="Open source, self-hosted CSV uploads and mapping."/>
+            <meta property="og:description" content="Simple, reusable, open-source SaaS targets"/>
 
             <meta name="twitter:card" content="summary"/>
             <meta name="twitter:site" content="@hotgluexyz"/>
-            <meta name="twitter:title" content="gluestick by hotglue"/>
-            <meta name="twitter:description" content="Open source, self-hosted CSV uploads and mapping."/>
+            <meta name="twitter:title" content="gluestick – SaaS targets"/>
+            <meta name="twitter:description" content="Simple, reusable, open-source SaaS targets"/>
 
             {/* Fonts */}
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap"/>
